@@ -1,0 +1,59 @@
+version: "3.9"
+volumes:
+  frontend-content:
+services:
+  mongo:
+    container_name: getaplace_db
+    image: mongo
+    environment:
+      MONGO_INITDB_DATABASE: ${GETAPLACE_MONGO_DATABASE}
+    ports:
+      - ${GETAPLACE_MONGO_DB_PORT}:27017
+
+  mongo-express:
+    container_name: getaplace_db_ui
+    image: mongo-express
+    ports:
+      - ${GETAPLACE_MONGO_FE_PORT}:8081
+    depends_on:
+      - mongo
+
+  react:
+    volumes:
+      - frontend-content:/app/frontend/build/
+    container_name: getaplace_frontend
+    build:
+      context: ./frontend
+    environment:
+      REACT_APP_PROJECT_ID: ${REACT_APP_PROJECT_ID}
+
+  node:
+    volumes:
+      - ./backend:/app/backend
+      - /app/backend/node_modules
+      - frontend-content:/app/backend/build
+
+    container_name: getaplace_backend
+    build:
+      context: ./backend
+    ports:
+      - ${GETAPLACE_NODE_PORT}:${GETAPLACE_NODE_PORT}
+    depends_on:
+      - mongo-express
+      - react
+    env_file:
+      - .env
+    environment:
+      GETAPLACE_NODE_PORT: ${GETAPLACE_NODE_PORT}
+      GETAPLACE_NODE_MONGOURL: mongodb://${GETAPLACE_MONGO_HOST}:27017/${GETAPLACE_MONGO_DATABASE}
+
+  nginx:
+    depends_on:
+      - react
+      - node
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
