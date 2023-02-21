@@ -87,7 +87,7 @@ async function registerUser(req, res, userTypeModal) {
   } catch (error) {
     res
       .status(400)
-      .json({ status: 0, error: helpers.getErrorValidationMsg(error.errors) });
+      .json({ status: 0, error: getErrorValidationMsg(error.errors) });
     return;
   }
   res.status(201).json({

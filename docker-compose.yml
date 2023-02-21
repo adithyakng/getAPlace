@@ -20,12 +20,16 @@ services:
 
   react:
     volumes:
+      - ./frontend:/app/frontend
+      - /app/frontend/node_modules/
       - frontend-content:/app/frontend/build/
     container_name: getaplace_frontend
     build:
       context: ./frontend
+      dockerfile: ${REACT_DOCKERFILE}
     environment:
       REACT_APP_PROJECT_ID: ${REACT_APP_PROJECT_ID}
+      REACT_APP_BACKEND_BASE_URL: http://localhost:${GETAPLACE_MAIN_PORT}/api
 
   node:
     volumes:
@@ -48,6 +52,7 @@ services:
       GETAPLACE_NODE_MONGOURL: mongodb://${GETAPLACE_MONGO_HOST}:27017/${GETAPLACE_MONGO_DATABASE}
 
   nginx:
+    container_name: getaplace_proxy
     depends_on:
       - react
       - node
@@ -56,4 +61,4 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "${GETAPLACE_MAIN_PORT}:80"

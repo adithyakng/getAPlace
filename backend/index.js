@@ -1,4 +1,5 @@
 require("dotenv");
+const cors = require("cors");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
@@ -7,10 +8,10 @@ const jwt = require("jsonwebtoken");
 
 const healthRoute = require("./routes/healthRoute");
 const loginRoute = require("./routes/loginRoute");
-const userModel = require("./models/userModel");
 const adminRoute = require("./routes/adminRoute");
 
 const app = express();
+app.use(cors());
 
 app.use(bodyParser.json({ limit: "200mb" }));
 app.use(
@@ -20,9 +21,9 @@ app.use(
     parameterLimit: 500000,
   })
 );
-app.use("/health", healthRoute);
-app.use("/login", loginRoute);
-app.use("/admin", adminRoute);
+app.use("/api/health", healthRoute);
+app.use("/api/login", loginRoute);
+app.use("/api/admin", adminRoute);
 
 app.listen(process.env.GETAPLACE_NODE_PORT, async () => {
   // Connection to MongoDb

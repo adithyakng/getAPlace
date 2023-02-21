@@ -1,0 +1,27 @@
+:root {
+  --main-bg-color: #fbeec1;
+  --main-color1: #bc986a;
+  --main-color1dark: #9c733e;
+  --main-color2: #daad86;
+  --main-color3: #659dbd;
+  --main-color4: #8d8741;
+}
+
+.base_container {
+  background-color: var(--main-bg-color);
+  color: black;
+  display: flex;
+  min-height: 100vh;
+  align-items: baseline;
+  padding: 2%;
+}
+
+.left_container {
+  flex-grow: 1;
+  padding: 2%;
+}
+
+.right_container {
+  flex-grow: 1;
+  padding: 2%;
+}
