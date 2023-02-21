@@ -27,7 +27,6 @@ app.use("/admin", adminRoute);
 app.listen(process.env.GETAPLACE_NODE_PORT, async () => {
   // Connection to MongoDb
   try {
-    console.log(process.env.GETAPLACE_NODE_MONGOURL, "asdasdasdasd");
     await mongoose.connect(process.env.GETAPLACE_NODE_MONGOURL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -37,5 +36,5 @@ app.listen(process.env.GETAPLACE_NODE_PORT, async () => {
     console.log(error);
   }
   // Connection to MongoDb
-  console.log("Server Started at port 3000");
+  console.log(`Server Started at port ${process.env.GETAPLACE_NODE_PORT}`);
 });
