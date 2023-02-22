@@ -33,7 +33,7 @@ async function uploadImages(images) {
     }
   }
   if (images.length != s3Images.length) {
-    return { status: 0, error: "Some images were not uploaded" };
+    return { status: 0, error: image.error };
   }
   return { status: 1, s3Details: s3Images };
 }
