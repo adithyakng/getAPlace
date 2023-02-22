@@ -7,10 +7,12 @@ const CustomButton = ({
   value,
   clickHandler,
   isDisabled = false,
+  width = "96%",
+  margin = "2%",
 }) => {
   return (
     <Button
-      style={{ width: "96%", margin: "2%" }}
+      style={{ width: width, margin: margin }}
       type="button"
       variant="contained"
       id={id}

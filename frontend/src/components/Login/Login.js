@@ -24,7 +24,8 @@ const Login = ({ pageName, apiPath }) => {
 
   const clickHandler = async () => {
     try {
-      await axios.post(apiPath, loginObject);
+      const response = await axios.post(apiPath, loginObject);
+      localStorage.setItem("access_token", response.data.access_token);
       setLoginObject(new types.LoginObject());
       navigate(`/${pageName}/dashboard`);
     } catch (error) {

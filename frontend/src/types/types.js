@@ -29,10 +29,35 @@ const ErrorModalObject = function (
   this.show = show;
 };
 
+const NewHouseAdObject = function (
+  features = { list: [], feature: "" },
+  cost = 0,
+  bedroom = 0,
+  bathroom = 0,
+  carpetArea = 1890,
+  images = [],
+  amenities = { list: [], amenity: [] },
+  location = {},
+  address = "",
+  leaseAgreement = ""
+) {
+  this.features = features;
+  this.cost = cost;
+  this.bedroom = bedroom;
+  this.bathroom = bathroom;
+  this.carpetArea = carpetArea;
+  this.images = images;
+  this.amenities = amenities;
+  this.location = location;
+  this.address = address;
+  this.leaseAgreement = leaseAgreement;
+};
+
 const types = {
   SignupObject,
   LoginObject,
   ErrorModalObject,
+  NewHouseAdObject,
 };
 
 export default types;

@@ -30,6 +30,8 @@ services:
     environment:
       REACT_APP_PROJECT_ID: ${REACT_APP_PROJECT_ID}
       REACT_APP_BACKEND_BASE_URL: http://localhost:${GETAPLACE_MAIN_PORT}/api
+    ports:
+      - "3000:3000"
 
   node:
     volumes:

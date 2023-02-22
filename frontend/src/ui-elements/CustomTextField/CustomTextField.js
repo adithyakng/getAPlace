@@ -10,10 +10,12 @@ const CustomTextField = ({
   setValue,
   type = "text",
   isDisabled = false,
+  width = "96%",
+  margin = "2%",
 }) => {
   return (
     <TextField
-      style={{ width: "96%", margin: "2%" }}
+      style={{ width: width, margin: margin }}
       helperText={helperText}
       id={id}
       name={name}
