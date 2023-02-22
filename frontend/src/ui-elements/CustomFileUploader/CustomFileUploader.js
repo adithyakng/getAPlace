@@ -1,28 +1,40 @@
 import { Button } from "@mui/material";
 import ImageIcon from "@mui/icons-material/Image";
 import React from "react";
+import CustomTextField from "../CustomTextField/CustomTextField";
 
 const CustomFileUploader = ({
   id,
   name,
   value,
+  valuesList,
   clickHandler,
   isDisabled = false,
-  width = "96%",
+  width = "45%",
   margin = "2%",
   isMultiple = true,
 }) => {
+  console.log(valuesList);
   return (
     <>
       <input
         color="primary"
-        accept="image/*"
+        accept="*/*"
         type="file"
         multiple={isMultiple}
         onChange={clickHandler}
         name={name}
         id={id}
         style={{ display: "none" }}
+      />
+      <CustomTextField
+        helperText={`${name} List`}
+        id={`${name}_list`}
+        name={`${name}metadata`}
+        label={`${name} List`}
+        isDisabled={true}
+        value={valuesList}
+        margin="0.5%"
       />
       <label htmlFor={name}>
         <Button

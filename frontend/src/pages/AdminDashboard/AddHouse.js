@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import utils from "../../utils/utils";
 
 import types from "../../types/types";
 import CustomButton from "../../ui-elements/CustomButton/CustomButton";
@@ -21,30 +22,19 @@ const AddHouse = () => {
   };
 
   const uploadFileHandler = async (e) => {
-    let fileData = await extractBase64fromFiles(e.target.files);
-    if (fileData.length === 1) {
-      fileData = fileData[0];
+    const metadata = e.target.name + "metadata";
+    const metadata_data = [];
+
+    for (let i = 0; i < e.target.files.length; i++) {
+      metadata_data.push(e.target.files[i].name);
     }
-
-    setNewHouse({ ...newHouse, [e.target.name]: fileData });
-  };
-
-  const extractBase64fromFiles = async (files) => {
-    const resp = [];
-    for (let i = 0; i < files.length; i++) {
-      resp.push(await toBase64(files[i]));
-    }
-
-    return resp;
-  };
-
-  const toBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
+    const fileData = await utils.extractBase64fromFiles(e.target.files);
+    setNewHouse({
+      ...newHouse,
+      [e.target.name]: fileData,
+      [metadata]: metadata_data,
     });
+  };
 
   const createHouseHandler = async (e) => {
     try {
@@ -53,12 +43,11 @@ const AddHouse = () => {
       requestObject["features"] = newHouse["features"].list;
       const resp = await axios.post("/admin/addHouse", requestObject);
     } catch (error) {
-      // setErrorModal({
-      //   show: true,
-      //   title: "Creating Advertisement Failed!",
-      //   body: error.response.data,
-      // });
-      console.log(error);
+      setErrorModal({
+        show: true,
+        title: "Creating Advertisement Failed!",
+        body: error.response.data,
+      });
     }
   };
 
@@ -134,13 +123,23 @@ const AddHouse = () => {
         id="images"
         name="images"
         value="Upload Images"
+        valueListName="imagesmetadata"
+        valuesList={{
+          imagesmetadata: JSON.stringify(newHouse["imagesmetadata"]),
+        }}
         clickHandler={uploadFileHandler}
-        key={`image_upload`}
+        key={`images`}
       />
       <CustomFileUploader
         id="leaseAgreement"
         name="leaseAgreement"
         value="Upload Lease Agreement"
+        valueListName="leaseAgreementmetadata"
+        valuesList={{
+          leaseAgreementmetadata: JSON.stringify(
+            newHouse["leaseAgreementmetadata"]
+          ),
+        }}
         clickHandler={uploadFileHandler}
         key={`lease_agreement`}
         isMultiple={false}

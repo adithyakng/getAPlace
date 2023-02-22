@@ -39,7 +39,9 @@ const NewHouseAdObject = function (
   amenities = { list: [], amenity: [] },
   location = {},
   address = "",
-  leaseAgreement = ""
+  leaseAgreement = "",
+  imagesmetadata = [],
+  leaseAgreementmetadata = []
 ) {
   this.features = features;
   this.cost = cost;
@@ -51,6 +53,8 @@ const NewHouseAdObject = function (
   this.location = location;
   this.address = address;
   this.leaseAgreement = leaseAgreement;
+  this.imagesmetadata = imagesmetadata;
+  this.leaseAgreementmetadata = leaseAgreementmetadata;
 };
 
 const types = {
