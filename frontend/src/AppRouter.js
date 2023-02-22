@@ -8,6 +8,10 @@ import AddHouse from "./pages/AdminDashboard/AddHouse";
 
 const AppRouter = Routes([
   {
+    path: "/",
+    element: <Auth />,
+  },
+  {
     path: "/users/auth",
     element: <Auth />,
   },
