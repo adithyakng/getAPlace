@@ -4,6 +4,7 @@ import { createBrowserRouter as Routes } from "react-router-dom";
 import Auth from "./pages/Auth/Auth";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
+import AddHouse from "./pages/AdminDashboard/AddHouse";
 
 const AppRouter = Routes([
   {
@@ -21,6 +22,22 @@ const AppRouter = Routes([
   {
     path: "/user/dashboard",
     element: <UserDashboard />,
+  },
+  {
+    path: "/admin/ads/add",
+    element: (
+      <AdminDashboard>
+        <AddHouse />
+      </AdminDashboard>
+    ),
+  },
+  {
+    path: "/admin/ads/view",
+    element: (
+      <AdminDashboard>
+        <AddHouse />
+      </AdminDashboard>
+    ),
   },
 ]);
 

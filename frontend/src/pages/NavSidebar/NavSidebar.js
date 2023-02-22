@@ -8,6 +8,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useNavigate } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -19,6 +20,7 @@ import HomeIcon from "@mui/icons-material/Home";
 
 const NavSidebar = ({ children }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const navigate = useNavigate();
 
   const menuItemsGroups = [
     [
@@ -28,10 +30,12 @@ const NavSidebar = ({ children }) => {
           {
             label: "Add House Ad",
             icon: <AddHomeIcon />,
+            href: "/admin/ads/add",
           },
           {
             label: "View House Ads",
             icon: <HomeIcon />,
+            href: "/admin/ads/view",
           },
         ],
       },
@@ -63,7 +67,11 @@ const NavSidebar = ({ children }) => {
               {menuItemGroup[0].items.map((row) => {
                 return (
                   <ListItem key={menuItemGroup.key} disablePadding>
-                    <ListItemButton>
+                    <ListItemButton
+                      onClick={() => {
+                        navigate(row.href, { replace: true });
+                      }}
+                    >
                       <ListItemIcon>{row.icon}</ListItemIcon>
                       <ListItemText primary={row.label} />
                     </ListItemButton>

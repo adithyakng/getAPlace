@@ -3,16 +3,14 @@ import React from "react";
 import NavSidebar from "../NavSidebar/NavSidebar";
 import AddHouse from "./AddHouse";
 
-const AdminDashboard = () => {
+const AdminDashboard = ({ children }) => {
   return (
     <div
       className="base_container"
       style={{ margin: "-2%", marginLeft: "-2%" }}
     >
       <NavSidebar>
-        <div style={{ margin: "3%" }}>
-          <AddHouse />
-        </div>
+        <div style={{ margin: "3%" }}>{children}</div>
       </NavSidebar>
     </div>
   );
