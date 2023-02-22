@@ -13,10 +13,10 @@ const adminRoute = require("./routes/adminRoute");
 const app = express();
 app.use(cors());
 
-app.use(bodyParser.json({ limit: "200mb" }));
+app.use(bodyParser.json({ limit: "1000mb" }));
 app.use(
   bodyParser.urlencoded({
-    limit: "200mb",
+    limit: "1000mb",
     extended: true,
     parameterLimit: 500000,
   })

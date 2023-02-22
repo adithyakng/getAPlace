@@ -48,34 +48,17 @@ const AddHouse = () => {
 
   const createHouseHandler = async (e) => {
     try {
-      // let base64images = [];
-      // for (let i = 0; i < newHouse["images"].length; i++) {
-      //   base64images.push(await toBase64(newHouse["images"][i]));
-      // }
-
-      // let base64pdf = null;
-      // for (let i = 0; i < newHouse["images"].length; i++) {
-      //   base64pdf = await toBase64(newHouse["leaseAgreement"][i]);
-      // }
-
-      // const leaseAgreement = document.getElementById("leaseAgreement").files[0];
-      // const formData = new FormData();
-      // formData.append("leaseAgreement", leaseAgreement);
-      // for (const key in newHouse) {
-      //   formData.append(key, newHouse[key]);
-      // }
-      // formData.append("ammenities", newHouse["amenities"].list);
-      // formData.append("features", newHouse["features"].list);
-      // formData.append("images", base64images);
-      // formData.append("leaseAgreement", base64pdf);
-      console.log(newHouse);
-      const resp = await axios.post("/admin/addHouse", newHouse);
+      const requestObject = { ...newHouse };
+      requestObject["ammenities"] = newHouse["amenities"].list;
+      requestObject["features"] = newHouse["features"].list;
+      const resp = await axios.post("/admin/addHouse", requestObject);
     } catch (error) {
-      setErrorModal({
-        show: true,
-        title: "Creating Advertisement Failed!",
-        body: error,
-      });
+      // setErrorModal({
+      //   show: true,
+      //   title: "Creating Advertisement Failed!",
+      //   body: error.response.data,
+      // });
+      console.log(error);
     }
   };
 
