@@ -34,7 +34,8 @@ const CustomFileUploader = ({
         label={`${name} List`}
         isDisabled={true}
         value={valuesList}
-        margin="0.5%"
+        margin={margin}
+        width={width}
       />
       <label htmlFor={name}>
         <Button
