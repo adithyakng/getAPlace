@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter as Routes } from "react-router-dom";
+import { createBrowserRouter as Routes, Navigate } from "react-router-dom";
 
 import Auth from "./pages/Auth/Auth";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
@@ -8,8 +8,8 @@ import AddHouse from "./pages/AdminDashboard/AddHouse";
 
 const AppRouter = Routes([
   {
-    path: "/",
-    element: <Auth />,
+    path: "",
+    element: <Navigate to="/admin/auth" replace />,
   },
   {
     path: "/users/auth",
