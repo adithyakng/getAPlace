@@ -54,8 +54,31 @@ const house = new mongoose.Schema({
     address:{
         type:String,
         required: true
+    },
+    occupied:{
+        type: Number,
+        default:0
+    },
+    created_on:{
+        type: Date,
+        default: Date()
+    },
+    startDate:{
+        type: Date,
+        required: true
+    },
+    deleted:{
+        type: Number,
+        default:0
+    },
+    faqs:{
+        type:String
     }
 })
+
+house.pre(/^find/, function(){
+    this.where({'deleted':{'$ne':1}});
+});
 
 const houseModel = mongoose.model("house",house,"house");
 module.exports = houseModel;

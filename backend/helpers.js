@@ -1,10 +1,12 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+let moment=require('moment');
 
 const { adminUser, normalUser } = require("./constants");
 const userModal = require("./models/userModel");
 const adminUserModal = require("./models/adminUserModel");
 const s3Helper = require("./s3Helper");
+const houseModal = require("./models/houseModel");
 
 require("dotenv").config();
 
@@ -124,10 +126,126 @@ async function logInUser(req, res, userTypeModal) {
   });
 }
 
+async function addOrEditHouse (req, res, houseObject = false){
+  let body = req.body;
+  let leaseAgreementFile;
+  let image;
+  var house = houseObject ? houseObject  : new houseModal({
+    userId: req.user.id,
+  });
+  let error = [];
+  if (!body.features) {
+    error.push("Features are missing");
+  } else {
+    house.featureStrings = [];
+    body.features.forEach((element) => {
+      house.featureStrings.push(element);
+    });
+  }
+  if (!body.cost) {
+    error.push("Cost is required");
+  } else {
+    house.cost = Number(body.cost);
+  }
+  if (!body.address) {
+    error.push("Address is required");
+  } else {
+    house.address = body.address;
+  }
+  if (!body.bedroom) {
+    error.push("Bedroom is required");
+  } else {
+    house.bedroom = body.bedroom;
+  }
+  if (!body.bathroom) {
+    error.push("bathroom is required");
+  } else {
+    house.bathroom = body.bathroom;
+  }
+  if (!body.carpetArea) {
+    error.push("CarpetArea is required");
+  } else {
+    house.carpetArea = body.carpetArea;
+  }
+  if (!body.ammenities) {
+    error.push("Ammenities is required");
+  } else {
+    house.ammenities = body.ammenities;
+  }
+  if(body.faqs){
+    house.faqs = body.faqs;
+  }
+  if (!body.leaseAgreement) {
+    error.push("Lease aggrement is required");
+  }
+  if (!body.startDate || !moment(body.startDate,"DD/MM/YYYY",true)) {
+    error.push("Please enter a valid date in DD/MM/YYYY format");
+  }
+  else{
+    house.startDate = new Date(body.startDate);
+  }
+  if (!body.images) {
+    error.push("Please upload atlease one image");
+  }
+  if (!body.location) {
+    house.location = body.location;
+  }
+  if (error.length != 0) {
+    return res.status(400).json({ status: 0, error: error });
+  } else {
+    house.images = [];
+    image = await s3Helper.uploadImages(body.images);
+    if (image.status != 0) {
+      house.images = image.s3Details;
+    } else {
+      error.push(image.error);
+    }
+    leaseAgreementFile = await s3Helper.uploadFile(
+      body.leaseAgreement[0],
+      "application/pdf"
+    );
+    if (leaseAgreementFile.status) {
+      house.leaseAgreement = leaseAgreementFile.s3Details;
+    } else {
+      error.push("Lease Agreement cannot be uploaded");
+    }
+  }
+  if (error.length != 0) {
+    return res.status(400).json({ status: 0, error: error });
+  }
+  try {
+    await house.save();
+  } catch (error) {
+    res
+      .status(400)
+      .json({ status: 0, error: getErrorValidationMsg(error.errors) });
+    return;
+  }
+  res.status(201).send(house);
+  return;
+}
+
+async function deleteHouse(req,res,house){
+  house.deleted = 1;
+  try {
+    await house.save();
+  } catch (error) {
+    res
+      .status(400)
+      .json({ status: 0, error: getErrorValidationMsg(error.errors) });
+    return;
+  }
+  res.status(201).json({status: 1, message: "House Deleted"});
+  return;
+
+}
+
 module.exports = {
   getErrorValidationMsg,
   generateAccessToken,
   validateToken,
   registerUser,
   logInUser,
+  addOrEditHouse,
+  deleteHouse
 };
