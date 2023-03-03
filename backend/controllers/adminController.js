@@ -14,30 +14,26 @@ adminController.login = (req, res) => {
 };
 
 adminController.addHouse = async (req, res) => {
-  helpers.addOrEditHouse(req,res)
+  helpers.addOrEditHouse(req, res);
 };
 
 adminController.editHouse = async (req, res) => {
-  let houseId = req.body.id
-  let house = await houseModal.findOne({id:houseId, userId:req.user.id});
+  let houseId = req.body.id;
+  let house = await houseModal.findOne({ id: houseId, userId: req.user.id });
   if (!house) {
-    res
-      .status(401)
-      .json({ status: 1, error: "Invalid ID" });
+    res.status(401).json({ status: 1, error: "Invalid ID" });
     return;
   }
-  helpers.addOrEditHouse(req,res,house);
+  helpers.addOrEditHouse(req, res, house);
 };
 
 adminController.deleteHouse = async (req, res) => {
   let houseId = req.body.id;
-  let house = await houseModal.findOne({id:houseId, userId:req.user.id});
+  let house = await houseModal.findOne({ id: houseId, userId: req.user.id });
   if (!house) {
-    res
-      .status(401)
-      .json({ status: 1, error: "Invalid ID" });
+    res.status(401).json({ status: 1, error: "Invalid ID" });
     return;
   }
-  helpers.deleteHouse(req,res,house);
-}
+  helpers.deleteHouse(req, res, house);
+};
 module.exports = adminController;

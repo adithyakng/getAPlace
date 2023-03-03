@@ -28,11 +28,13 @@ const NavSidebar = ({ children }) => {
         key: "HousesGroup",
         items: [
           {
+            key: "HousesGroup.AddHousesAd",
             label: "Add House Ad",
             icon: <AddHomeIcon />,
             href: "/admin/ads/add",
           },
           {
+            key: "HousesGroup.ViewHouseAds",
             label: "View House Ads",
             icon: <HomeIcon />,
             href: "/admin/ads/view",
@@ -63,10 +65,10 @@ const NavSidebar = ({ children }) => {
       {menuItemsGroups.map((menuItemGroup) => {
         return (
           <>
-            <List>
-              {menuItemGroup[0].items.map((row) => {
+            <List key={menuItemGroup[0].key}>
+              {menuItemGroup[0].items.map((row, idx) => {
                 return (
-                  <ListItem key={menuItemGroup.key} disablePadding>
+                  <ListItem key={row.key} disablePadding>
                     <ListItemButton
                       onClick={() => {
                         navigate(row.href, { replace: true });
@@ -100,8 +102,13 @@ const NavSidebar = ({ children }) => {
               variant="dense"
               sx={{ backgroundColor: "var(--main-color1dark)" }}
             >
-              <IconButton edge="start" color="inherit" aria-label="menu">
-                <MenuIcon onClick={toggleDrawer(true)} />
+              <IconButton
+                onClick={toggleDrawer(true)}
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+              >
+                <MenuIcon />
               </IconButton>
               <Typography
                 variant="h6"

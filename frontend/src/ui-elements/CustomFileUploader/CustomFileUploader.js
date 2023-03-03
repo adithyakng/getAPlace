@@ -14,7 +14,6 @@ const CustomFileUploader = ({
   margin = "2%",
   isMultiple = true,
 }) => {
-  console.log(valuesList);
   return (
     <>
       <input

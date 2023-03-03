@@ -29,27 +29,37 @@ const ErrorModalObject = function (
   this.show = show;
 };
 
-const NewHouseAdObject = function (
-  features = { list: [], feature: "" },
-  cost = 0,
-  bedroom = 0,
-  bathroom = 0,
+const NewHouseAdObject = function ({
+  _id = null,
+  features = { list: ["security 24/7"], feature: "" },
+  cost = 1200,
+  bedroom = 2,
+  bathroom = 2,
   carpetArea = 1890,
   images = [],
-  amenities = { list: [], amenity: [] },
+  amenities = { list: ["swimming pool", "basketball court"], amenity: "" },
   location = {},
-  address = "",
-  leaseAgreement = "",
+  address = "3800 SW 34th street",
+  leaseAgreement = [],
   imagesmetadata = [],
-  leaseAgreementmetadata = []
-) {
+  leaseAgreementmetadata = [],
+}) {
+  this._id = _id;
   this.features = features;
+  if (Array.isArray(this.features)) {
+    this.features = { list: this.features, feature: "" };
+  }
+
+  this.amenities = amenities;
+  if (Array.isArray(this.amenities)) {
+    this.amenities = { list: this.amenities, amenity: "" };
+  }
+
   this.cost = cost;
   this.bedroom = bedroom;
   this.bathroom = bathroom;
   this.carpetArea = carpetArea;
   this.images = images;
-  this.amenities = amenities;
   this.location = location;
   this.address = address;
   this.leaseAgreement = leaseAgreement;

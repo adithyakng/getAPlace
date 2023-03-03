@@ -1,7 +1,6 @@
 import React from "react";
 
 import NavSidebar from "../NavSidebar/NavSidebar";
-import AddHouse from "./AddHouse";
 
 const AdminDashboard = ({ children }) => {
   return (
@@ -9,7 +8,7 @@ const AdminDashboard = ({ children }) => {
       className="base_container"
       style={{ margin: "-2%", marginLeft: "-2%" }}
     >
-      <NavSidebar>
+      <NavSidebar key={"navsidebaradmindashboard"}>
         <div style={{ margin: "3%" }}>{children}</div>
       </NavSidebar>
     </div>

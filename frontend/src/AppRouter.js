@@ -5,6 +5,7 @@ import Auth from "./pages/Auth/Auth";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import AddHouse from "./pages/AdminDashboard/AddHouse";
+import ViewHouse from "./pages/AdminDashboard/ViewHouse";
 
 const AppRouter = Routes([
   {
@@ -39,7 +40,7 @@ const AppRouter = Routes([
     path: "/admin/ads/view",
     element: (
       <AdminDashboard>
-        <AddHouse />
+        <ViewHouse />
       </AdminDashboard>
     ),
   },

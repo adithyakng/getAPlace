@@ -16,11 +16,11 @@ const CustomTextField = ({
   return (
     <TextField
       style={{ width: width, margin: margin }}
+      label={label}
       helperText={helperText}
+      value={value[name]}
       id={id}
       name={name}
-      label={label}
-      value={value[name]}
       onChange={setValue}
       type={type}
       disabled={isDisabled}
