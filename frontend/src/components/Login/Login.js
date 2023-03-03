@@ -32,7 +32,7 @@ const Login = ({ pageName, apiPath }) => {
       setErrorModal({
         show: true,
         title: "Authentication Failed!",
-        body: error.response.data.error,
+        body: JSON.stringify(error.response.data.error),
       });
     }
   };

@@ -10,7 +10,7 @@ const CustomFileUploader = ({
   valuesList,
   clickHandler,
   isDisabled = false,
-  width = "45%",
+  width = "20%",
   margin = "2%",
   isMultiple = true,
 }) => {

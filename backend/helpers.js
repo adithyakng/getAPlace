@@ -139,9 +139,9 @@ async function addOrEditHouse(req, res, houseObject = false) {
   if (!body.features) {
     error.push("Features are missing");
   } else {
-    house.featureStrings = [];
+    house.features = [];
     body.features.forEach((element) => {
-      house.featureStrings.push(element);
+      house.features.push(element);
     });
   }
   if (!body.cost) {

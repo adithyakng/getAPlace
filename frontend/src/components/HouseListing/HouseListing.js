@@ -4,11 +4,13 @@ import Paper from "@mui/material/Paper";
 
 // Custom Modules
 import CustomButton from "../../ui-elements/CustomButton/CustomButton";
+import CustomEditor from "../../ui-elements/CustomEditor/CustomEditor";
 import CustomFileUploader from "../../ui-elements/CustomFileUploader/CustomFileUploader";
 import CustomMultiTypeInput from "../../ui-elements/CustomMultiTypeInput/CustomMultiTypeInput";
 import CustomTextField from "../../ui-elements/CustomTextField/CustomTextField";
 import utils from "../../utils/utils";
 import types from "../../types/types";
+import Carousel from "react-material-ui-carousel";
 
 const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
   // States
@@ -42,7 +44,13 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
       const requestObject = { ...house };
       requestObject["amenities"] = house["amenities"].list;
       requestObject["features"] = house["features"].list;
+      requestObject["faqs"] = JSON.stringify(
+        document.getElementById("faqs" + requestObject._id).value
+      );
+      requestObject["id"] = null;
+      requestObject["_id"] = null;
       await axios.post("/admin/addHouse", requestObject);
+      setHouse(new types.NewHouseAdObject());
       setErrorModal({
         show: true,
         title: "Creating Advertisement Successful!",
@@ -52,7 +60,7 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
       setErrorModal({
         show: true,
         title: "Creating Advertisement Failed!",
-        body: error.response.data,
+        body: JSON.stringify(error.response.data),
       });
     }
   };
@@ -72,24 +80,26 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
       setErrorModal({
         show: true,
         title: "Updating Advertisement Failed!",
-        body: error.response.data,
+        body: JSON.stringify(error.response.data),
       });
     }
   };
 
   const deleteHouseHandler = async (e) => {
     try {
-      await axios.delete("/admin/deleteHouse", house._id);
+      const requestObject = { ...house };
+      await axios.delete("/admin/deleteHouse?id=" + requestObject.id);
       setErrorModal({
         show: true,
         title: "Deleting Advertisement Successful!",
         body: `The listing has been deleted successfully`,
       });
+      window.location.reload();
     } catch (error) {
       setErrorModal({
         show: true,
         title: "Deleting Advertisement Failed!",
-        body: error.response.data,
+        body: JSON.stringify(error.response.data),
       });
     }
   };
@@ -97,19 +107,23 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
   // Custom Component
   function Item({ imageLoc }) {
     return (
-      <Paper>
-        <img src={imageLoc} alt={imageLoc} />
+      <Paper sx={{ position: "relative", left: "25%" }}>
+        <img src={imageLoc} alt={imageLoc} width="100%" height="100%" />
       </Paper>
     );
   }
 
   return (
-    <>
-      {isView
-        ? house.images.map((row) => {
-            return <Item imageLoc={row.Location} />;
-          })
-        : null}
+    <div
+      style={{
+        boxShadow: "5px 5px 20px 2px black",
+        backgroundColor: "var(--main-bg-color2)",
+        padding: "2%",
+        margin: "1%",
+        minHeight: "110vh",
+        borderRadius: "8px",
+      }}
+    >
       <CustomMultiTypeInput
         label={"Features"}
         labelName={"features"}
@@ -117,46 +131,6 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
         labelAddName={"feature"}
         value={house}
         setValue={setHouse}
-      />
-      <CustomTextField
-        helperText={`Please enter Cost`}
-        id={"cost"}
-        name={"cost"}
-        label={"Cost"}
-        value={house}
-        setValue={changeHandler}
-        type="number"
-        margin="0.5%"
-      />
-      <CustomTextField
-        helperText={`Please enter no of bedrooms`}
-        id={"bedroom"}
-        name={"bedroom"}
-        label={"Bedrooms"}
-        value={house}
-        setValue={changeHandler}
-        type="number"
-        margin="0.5%"
-      />
-      <CustomTextField
-        helperText={`Please enter no of bathrooms`}
-        id={"bathroom"}
-        name={"bathroom"}
-        label={"Bathroom"}
-        value={house}
-        setValue={changeHandler}
-        type="number"
-        margin="0.5%"
-      />
-      <CustomTextField
-        helperText={`Please enter length of carpet area`}
-        id={"carpetArea"}
-        name={"carpetArea"}
-        label={"Carpet Area"}
-        value={house}
-        setValue={changeHandler}
-        type="number"
-        margin="0.5%"
       />
       <CustomMultiTypeInput
         label={"Amenities"}
@@ -167,6 +141,62 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
         setValue={setHouse}
       />
       <CustomTextField
+        helperText={`Advertisement Start Date`}
+        id={"startDate"}
+        name={"startDate"}
+        label={"Start Date"}
+        value={house}
+        type={"date"}
+        setValue={changeHandler}
+        margin="0.4%"
+        width="16%"
+      />
+
+      <CustomTextField
+        helperText={`Please enter Cost`}
+        id={"cost"}
+        name={"cost"}
+        label={"Cost"}
+        value={house}
+        setValue={changeHandler}
+        type="number"
+        margin="0.4%"
+        width="19.5%"
+      />
+      <CustomTextField
+        helperText={`Please enter no of bedrooms`}
+        id={"bedroom"}
+        name={"bedroom"}
+        label={"Bedrooms"}
+        value={house}
+        setValue={changeHandler}
+        type="number"
+        margin="0.4%"
+        width="20%"
+      />
+      <CustomTextField
+        helperText={`Please enter no of bathrooms`}
+        id={"bathroom"}
+        name={"bathroom"}
+        label={"Bathroom"}
+        value={house}
+        setValue={changeHandler}
+        type="number"
+        margin="0.4%"
+        width="20%"
+      />
+      <CustomTextField
+        helperText={`Please enter length of carpet area`}
+        id={"carpetArea"}
+        name={"carpetArea"}
+        label={"Carpet Area"}
+        value={house}
+        setValue={changeHandler}
+        type="number"
+        margin="0.4%"
+        width="20%"
+      />
+      <CustomTextField
         helperText={`Please enter address`}
         id={"address"}
         name={"address"}
@@ -175,6 +205,14 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
         setValue={changeHandler}
         margin="0.5%"
       />
+
+      <CustomEditor
+        editorId={"faqs"}
+        uniqueId={house._id}
+        value={house}
+        setValue={changeHandler}
+      />
+
       <CustomFileUploader
         id="images"
         name="images"
@@ -200,30 +238,57 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
         key={`lease_agreement`}
         isMultiple={false}
       />
-      <CustomButton
-        id="addHouse"
-        name="addHouse"
-        value="Create Advertisement"
-        clickHandler={createHouseHandler}
-        key={`create_house_button`}
-      />
 
-      <CustomButton
-        id="updateHouse"
-        name="updateHouse"
-        value="Update Advertisement"
-        clickHandler={updateHouseHandler}
-        key={`update_house_button`}
-      />
+      {isView ? (
+        <div>
+          <Carousel
+            navButtonsAlwaysVisible={false}
+            sx={{
+              maxWidth: "40vw",
+              position: "relative",
+              left: "-150px",
+              maxHeight: "20vw",
+            }}
+          >
+            {house.images.map((row) => {
+              return <Item imageLoc={row} />;
+            })}
+          </Carousel>
+        </div>
+      ) : null}
 
-      <CustomButton
-        id="deleteHouse"
-        name="deleteHouse"
-        value="Delete Advertisement"
-        clickHandler={deleteHouseHandler}
-        key={`delete_house_button`}
-      />
-    </>
+      {!isView ? (
+        <CustomButton
+          id="addHouse"
+          name="addHouse"
+          value="Create Advertisement"
+          clickHandler={createHouseHandler}
+          key={`create_house_button`}
+        />
+      ) : null}
+
+      {isView ? (
+        <CustomButton
+          id="updateHouse"
+          name="updateHouse"
+          value="Update Advertisement"
+          clickHandler={updateHouseHandler}
+          key={`update_house_button`}
+          width="46%"
+        />
+      ) : null}
+
+      {isView ? (
+        <CustomButton
+          id="deleteHouse"
+          name="deleteHouse"
+          value="Delete Advertisement"
+          clickHandler={deleteHouseHandler}
+          key={`delete_house_button`}
+          width="46%"
+        />
+      ) : null}
+    </div>
   );
 };
 

@@ -30,7 +30,6 @@ const Signup = ({ pageName, apiPath }) => {
       });
       setSignupObject(new types.SignupObject());
     } catch (error) {
-      console.log(error);
       setErrorModal({
         show: true,
         title: "Signup Failed!",

@@ -1,3 +1,5 @@
+import dateFormat from "dateformat";
+
 const SignupObject = function (
   name = "",
   email = "",
@@ -30,21 +32,26 @@ const ErrorModalObject = function (
 };
 
 const NewHouseAdObject = function ({
+  id = null,
   _id = null,
-  features = { list: ["security 24/7"], feature: "" },
-  cost = 1200,
-  bedroom = 2,
-  bathroom = 2,
-  carpetArea = 1890,
+  features = { list: [], feature: "" },
+  startDate = new Date(),
+  cost = 0,
+  bedroom = 0,
+  bathroom = 0,
+  carpetArea = 0,
   images = [],
-  amenities = { list: ["swimming pool", "basketball court"], amenity: "" },
-  location = {},
-  address = "3800 SW 34th street",
-  leaseAgreement = [],
   imagesmetadata = [],
+  amenities = { list: [], amenity: "" },
+  location = {},
+  address = "",
+  leaseAgreement = [],
   leaseAgreementmetadata = [],
+  faqs = "<div>aaa</div>",
 }) {
+  this.id = id;
   this._id = _id;
+  this.startDate = dateFormat(startDate, "yyyy-mm-dd");
   this.features = features;
   if (Array.isArray(this.features)) {
     this.features = { list: this.features, feature: "" };
@@ -59,12 +66,30 @@ const NewHouseAdObject = function ({
   this.bedroom = bedroom;
   this.bathroom = bathroom;
   this.carpetArea = carpetArea;
-  this.images = images;
   this.location = location;
   this.address = address;
-  this.leaseAgreement = leaseAgreement;
-  this.imagesmetadata = imagesmetadata;
-  this.leaseAgreementmetadata = leaseAgreementmetadata;
+
+  this.images = [];
+  this.imagesmetadata = [];
+  for (let i = 0; i < images.length; i++) {
+    if (typeof images[i] === "object" && images[i] !== null) {
+      this.images.push(images[i].Location);
+      this.imagesmetadata.push(images[i].Key);
+    } else {
+      this.images.push(images[i]);
+      this.imagesmetadata.push(imagesmetadata[i]);
+    }
+  }
+
+  if (!Array.isArray(leaseAgreement)) {
+    this.leaseAgreement = [leaseAgreement.Location];
+    this.leaseAgreementmetadata = [leaseAgreement.Key];
+  } else {
+    this.leaseAgreement = leaseAgreement;
+    this.leaseAgreementmetadata = leaseAgreementmetadata;
+  }
+
+  this.faqs = faqs;
 };
 
 const types = {

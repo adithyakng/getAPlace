@@ -27,7 +27,7 @@ const house = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  featureStrings: {
+  features: {
     type: mongoose.Schema.Types.Mixed,
     required: true,
   },

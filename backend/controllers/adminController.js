@@ -28,7 +28,7 @@ adminController.editHouse = async (req, res) => {
 };
 
 adminController.deleteHouse = async (req, res) => {
-  let houseId = req.body.id;
+  let houseId = req.query.id;
   let house = await houseModal.findOne({ id: houseId, userId: req.user.id });
   if (!house) {
     res.status(401).json({ status: 1, error: "Invalid ID" });
