@@ -43,7 +43,7 @@ const house = new mongoose.Schema({
     type: mongoose.Schema.Types.Mixed,
     required: true,
   },
-  ammenities: {
+  amenities: {
     type: mongoose.Schema.Types.Mixed,
     required: true,
   },

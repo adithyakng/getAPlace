@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-let moment=require('moment');
+let moment = require("moment");
 
 const { adminUser, normalUser } = require("./constants");
 const userModal = require("./models/userModel");
@@ -126,13 +126,15 @@ async function logInUser(req, res, userTypeModal) {
   });
 }
 
-async function addOrEditHouse (req, res, houseObject = false){
+async function addOrEditHouse(req, res, houseObject = false) {
   let body = req.body;
   let leaseAgreementFile;
   let image;
-  var house = houseObject ? houseObject  : new houseModal({
-    userId: req.user.id,
-  });
+  var house = houseObject
+    ? houseObject
+    : new houseModal({
+        userId: req.user.id,
+      });
   let error = [];
   if (!body.features) {
     error.push("Features are missing");
@@ -167,21 +169,20 @@ async function addOrEditHouse (req, res, houseObject = false){
   } else {
     house.carpetArea = body.carpetArea;
   }
-  if (!body.ammenities) {
-    error.push("Ammenities is required");
+  if (!body.amenities) {
+    error.push("Amenities is required");
   } else {
-    house.ammenities = body.ammenities;
+    house.amenities = body.amenities;
   }
-  if(body.faqs){
+  if (body.faqs) {
     house.faqs = body.faqs;
   }
   if (!body.leaseAgreement) {
     error.push("Lease aggrement is required");
   }
-  if (!body.startDate || !moment(body.startDate,"DD/MM/YYYY",true)) {
+  if (!body.startDate || !moment(body.startDate, "DD/MM/YYYY", true)) {
     error.push("Please enter a valid date in DD/MM/YYYY format");
-  }
-  else{
+  } else {
     house.startDate = new Date(body.startDate);
   }
   if (!body.images) {
@@ -225,7 +226,7 @@ async function addOrEditHouse (req, res, houseObject = false){
   return;
 }
 
-async function deleteHouse(req,res,house){
+async function deleteHouse(req, res, house) {
   house.deleted = 1;
   try {
     await house.save();
@@ -235,9 +236,8 @@ async function deleteHouse(req,res,house){
       .json({ status: 0, error: getErrorValidationMsg(error.errors) });
     return;
   }
-  res.status(201).json({status: 1, message: "House Deleted"});
+  res.status(201).json({ status: 1, message: "House Deleted" });
   return;
-
 }
 
 module.exports = {
@@ -247,5 +247,5 @@ module.exports = {
   registerUser,
   logInUser,
   addOrEditHouse,
-  deleteHouse
+  deleteHouse,
 };
