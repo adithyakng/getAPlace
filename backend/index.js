@@ -22,7 +22,7 @@ app.use(
   })
 );
 app.use("/api/health", healthRoute);
-app.use("/api/login", loginRoute);
+app.use("/api/users", loginRoute);
 app.use("/api/admin", adminRoute);
 
 app.listen(process.env.GETAPLACE_NODE_PORT, async () => {
