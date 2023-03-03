@@ -15,34 +15,9 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 
-import AddHomeIcon from "@mui/icons-material/AddHome";
-import HomeIcon from "@mui/icons-material/Home";
-
-const NavSidebar = ({ children }) => {
+const NavSidebar = ({ children, menuItemsGroups }) => {
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
-
-  const menuItemsGroups = [
-    [
-      {
-        key: "HousesGroup",
-        items: [
-          {
-            key: "HousesGroup.AddHousesAd",
-            label: "Add House Ad",
-            icon: <AddHomeIcon />,
-            href: "/admin/ads/add",
-          },
-          {
-            key: "HousesGroup.ViewHouseAds",
-            label: "View House Ads",
-            icon: <HomeIcon />,
-            href: "/admin/ads/view",
-          },
-        ],
-      },
-    ],
-  ];
 
   const toggleDrawer = (isShowMenu) => (event) => {
     if (

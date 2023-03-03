@@ -47,8 +47,26 @@ const NewHouseAdObject = function ({
   address = "",
   leaseAgreement = [],
   leaseAgreementmetadata = [],
-  faqs = "<div>aaa</div>",
+  faqs = "",
 }) {
+  images = [
+    {
+      Location:
+        "https://fujifilm-x.com/wp-content/uploads/2021/01/gfx100s_sample_04_thum-1.jpg",
+      Key: "apple.jpg",
+    },
+    {
+      Location:
+        "https://images.unsplash.com/photo-1579353977828-2a4eab540b9a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2FtcGxlfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+      Key: "pineapple.jpg",
+    },
+
+    {
+      Location:
+        "https://dl.fujifilm-x.com/global/products/cameras/x-t3/sample-images/ff_x_t3_002.JPG",
+      Key: "greenapple.jpg",
+    },
+  ];
   this.id = id;
   this._id = _id;
   this.startDate = dateFormat(startDate, "yyyy-mm-dd");

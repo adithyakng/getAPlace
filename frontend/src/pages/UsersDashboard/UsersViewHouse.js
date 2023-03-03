@@ -3,9 +3,10 @@ import axios from "axios";
 
 import types from "../../types/types";
 import ErrorModal from "../../ui-elements/ErrorModal/ErrorModal";
-import HouseListing from "../../components/HouseListing/HouseListing";
+import Carousel from "react-material-ui-carousel";
+import ViewHouseListing from "../../components/ViewHouseListing/ViewHouseListing";
 
-const ViewHouse = () => {
+const UsersViewHouse = () => {
   // States
   const [housesArr, setHousesArr] = useState([]);
   const [errorModal, setErrorModal] = useState(new types.ErrorModalObject());
@@ -41,7 +42,7 @@ const ViewHouse = () => {
       {housesArr.map((house) => {
         return (
           <>
-            <HouseListing
+            <ViewHouseListing
               currHouse={house}
               setErrorModal={setErrorModal}
               isView={true}
@@ -53,4 +54,4 @@ const ViewHouse = () => {
   );
 };
 
-export default ViewHouse;
+export default UsersViewHouse;

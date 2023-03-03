@@ -49,13 +49,18 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
       );
       requestObject["id"] = null;
       requestObject["_id"] = null;
-      await axios.post("/admin/addHouse", requestObject);
-      setHouse(new types.NewHouseAdObject());
+      await axios.post("/admin/addHouse", requestObject, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      });
       setErrorModal({
         show: true,
         title: "Creating Advertisement Successful!",
         body: "A new listing has been added successfully",
       });
+
+      window.location.reload();
     } catch (error) {
       setErrorModal({
         show: true,
@@ -70,7 +75,11 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
       const requestObject = { ...house };
       requestObject["amenities"] = house["amenities"].list;
       requestObject["features"] = house["features"].list;
-      await axios.put("/admin/editHouse", requestObject);
+      await axios.put("/admin/editHouse", requestObject, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      });
       setErrorModal({
         show: true,
         title: "Updating Advertisement Successful!",
@@ -88,7 +97,11 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
   const deleteHouseHandler = async (e) => {
     try {
       const requestObject = { ...house };
-      await axios.delete("/admin/deleteHouse?id=" + requestObject.id);
+      await axios.delete("/admin/deleteHouse?id=" + requestObject.id, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      });
       setErrorModal({
         show: true,
         title: "Deleting Advertisement Successful!",

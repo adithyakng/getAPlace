@@ -3,14 +3,16 @@ import { createBrowserRouter as Routes, Navigate } from "react-router-dom";
 
 import Auth from "./pages/Auth/Auth";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
-import UserDashboard from "./pages/UserDashboard/UserDashboard";
+import UsersDashboard from "./pages/UsersDashboard/UsersDashboard";
 import AddHouse from "./pages/AdminDashboard/AddHouse";
 import ViewHouse from "./pages/AdminDashboard/ViewHouse";
+import UsersViewHouse from "./pages/UsersDashboard/UsersViewHouse";
+import UsersFAQs from "./pages/UsersDashboard/UsersFAQs";
 
 const AppRouter = Routes([
   {
     path: "",
-    element: <Navigate to="/admin/auth" replace />,
+    element: <Navigate to="/users/auth" replace />,
   },
   {
     path: "/users/auth",
@@ -25,8 +27,8 @@ const AppRouter = Routes([
     element: <AdminDashboard />,
   },
   {
-    path: "/user/dashboard",
-    element: <UserDashboard />,
+    path: "/users/dashboard",
+    element: <UsersDashboard />,
   },
   {
     path: "/admin/ads/add",
@@ -42,6 +44,23 @@ const AppRouter = Routes([
       <AdminDashboard>
         <ViewHouse />
       </AdminDashboard>
+    ),
+  },
+  {
+    path: "/users/ads/view",
+    element: (
+      <UsersDashboard>
+        <UsersViewHouse />
+      </UsersDashboard>
+    ),
+  },
+
+  {
+    path: "/users/faqs/*",
+    element: (
+      <UsersDashboard>
+        <UsersFAQs />
+      </UsersDashboard>
     ),
   },
 ]);

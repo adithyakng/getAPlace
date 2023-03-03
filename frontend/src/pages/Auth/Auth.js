@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "../../components/Login/Login";
 import Signup from "../../components/Signup/Signup";
 
@@ -8,6 +8,10 @@ const UserAuth = () => {
     login: `/${mainPath}/login`,
     signup: `/${mainPath}/register`,
   };
+
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
 
   return (
     <div className="base_container">

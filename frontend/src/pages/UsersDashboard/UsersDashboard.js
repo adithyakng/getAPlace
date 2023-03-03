@@ -5,23 +5,17 @@ import NavSidebar from "../NavSidebar/NavSidebar";
 import AddHomeIcon from "@mui/icons-material/AddHome";
 import HomeIcon from "@mui/icons-material/Home";
 
-const AdminDashboard = ({ children }) => {
+const UsersDashboard = ({ children }) => {
   const menuItemsGroups = [
     [
       {
         key: "HousesGroup",
         items: [
           {
-            key: "HousesGroup.AddHousesAd",
-            label: "Add House Ad",
-            icon: <AddHomeIcon />,
-            href: "/admin/ads/add",
-          },
-          {
             key: "HousesGroup.ViewHouseAds",
             label: "View House Ads",
             icon: <HomeIcon />,
-            href: "/admin/ads/view",
+            href: "/users/ads/view",
           },
         ],
       },
@@ -32,9 +26,9 @@ const AdminDashboard = ({ children }) => {
         items: [
           {
             key: "AccountGroup.Logout",
-            label: "Logout Admin",
+            label: "Logout User",
             icon: <AddHomeIcon />,
-            href: "/admin/auth",
+            href: "/users/auth",
           },
         ],
       },
@@ -47,7 +41,7 @@ const AdminDashboard = ({ children }) => {
       style={{ margin: "-2%", marginLeft: "-2%" }}
     >
       <NavSidebar
-        key={"navsidebaradmindashboard"}
+        key={"navsidebarusersdashboard"}
         menuItemsGroups={menuItemsGroups}
       >
         <div style={{ margin: "3%" }}>{children}</div>
@@ -56,4 +50,4 @@ const AdminDashboard = ({ children }) => {
   );
 };
 
-export default AdminDashboard;
+export default UsersDashboard;
