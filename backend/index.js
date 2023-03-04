@@ -9,6 +9,7 @@ const jwt = require("jsonwebtoken");
 const healthRoute = require("./routes/healthRoute");
 const loginRoute = require("./routes/loginRoute");
 const adminRoute = require("./routes/adminRoute");
+const houseRoute = require("./routes/houseRoute");
 
 const app = express();
 app.use(cors());
@@ -24,6 +25,7 @@ app.use(
 app.use("/api/health", healthRoute);
 app.use("/api/users", loginRoute);
 app.use("/api/admin", adminRoute);
+app.use("/api/house", houseRoute);
 
 app.listen(process.env.GETAPLACE_NODE_PORT, async () => {
   // Connection to MongoDb
