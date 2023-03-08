@@ -45,7 +45,7 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
       requestObject["amenities"] = house["amenities"].list;
       requestObject["features"] = house["features"].list;
       requestObject["faqs"] = JSON.stringify(
-        document.getElementById("faqs" + requestObject._id).value
+        document.getElementById("faqs" + requestObject._id + "trix").innerHTML
       );
       requestObject["id"] = null;
       requestObject["_id"] = null;
@@ -75,6 +75,9 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
       const requestObject = { ...house };
       requestObject["amenities"] = house["amenities"].list;
       requestObject["features"] = house["features"].list;
+      requestObject["faqs"] = JSON.stringify(
+        document.getElementById("faqs" + requestObject._id + "trix").innerHTML
+      );
       await axios.put("/admin/editHouse", requestObject, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("access_token"),

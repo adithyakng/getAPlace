@@ -7,23 +7,18 @@ const UsersFAQs = () => {
 
   const initData = async () => {
     try {
-      const houseId = window.location.pathname.split("/")[2];
-      const resp = await axios.post(
-        "/users/faqs",
-        { id: houseId },
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("access_token"),
-          },
-        }
-      );
+      const houseId = window.location.pathname.split("/")[3];
+      const resp = await axios.get(`/house/getFaq?id=${houseId}`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      });
 
-      setFaqData(resp.data);
+      setFaqData(JSON.parse(resp.data.faq));
     } catch (e) {
       setFaqData(
         "<h3>No Frequently Asked Questions available for this listing.</h3>"
       );
-      console.log(e);
     }
   };
 

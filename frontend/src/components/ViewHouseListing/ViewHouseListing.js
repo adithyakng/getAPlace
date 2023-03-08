@@ -62,7 +62,7 @@ const ViewHouseListing = ({ currHouse, setErrorModal, isView = false }) => {
           <IconButton
             aria-label="FAQs"
             onClick={() => {
-              window.open("/users/faqs/" + house._id);
+              window.open("/users/faqs/" + house.id);
             }}
           >
             <QuizIcon />

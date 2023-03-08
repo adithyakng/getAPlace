@@ -14,7 +14,13 @@ const CustomEditor = ({ editorId, value, uniqueId, setValue }) => {
         type="hidden"
         value={value[editorId]}
       />
-      <trix-editor input={editorId + uniqueId}>{value[editorId]}</trix-editor>
+      <trix-editor
+        id={editorId + uniqueId + "trix"}
+        input={editorId + uniqueId}
+        placeholder={"Enter frequently asked questions"}
+      >
+        {value[editorId]}
+      </trix-editor>
     </>
   );
 };
