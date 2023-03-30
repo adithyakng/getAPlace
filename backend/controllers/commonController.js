@@ -225,4 +225,29 @@ commonController.showAllRequests = async (req,res) => {
 
 }
 
+commonController.chatGpt = async (req,res) => {
+    if(!req.body.message){
+        return res.json({
+            status: 0,
+            message: "Message not found"
+        })
+    };
+    
+    const { Configuration, OpenAIApi } = require("openai");
+    const configuration = new Configuration({
+    apiKey: process.env.OPENAI_API_KEY,
+        });
+    const openai = new OpenAIApi(configuration);
+    const response = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: req.body.message,
+        max_tokens: 15,
+        temperature: 0,
+    });
+    return res.json({
+        status: 1,
+        message: response.data.choices[0].text
+    });
+}
+
 module.exports = commonController;
