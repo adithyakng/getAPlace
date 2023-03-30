@@ -11,4 +11,7 @@ routes.put("/editHouse",validateToken,adminController.editHouse);
 routes.delete("/deleteHouse",validateToken,adminController.deleteHouse);
 routes.post("/sortHouses",validateToken,commonController.sortHouses);
 routes.post("/sortOptions",validateToken,commonController.getSortOptions);
+routes.get("/getAllLeases",validateToken,commonController.getAllLeases);
+routes.get("/getAllRequests",validateToken,commonController.showAllRequests);
+routes.post("/actOnRequest",validateToken,adminController.actOnRequest);
 module.exports = routes;

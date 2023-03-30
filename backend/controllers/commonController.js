@@ -1,5 +1,7 @@
 const commonController = {};
 const houseModal = require('../models/houseModel');
+const raiseRequestModal = require("../models/requestsModel"); 
+const uuid = require('uuid');   
 commonController.listHouses = async (req,res) => {
     let houses = [];
     if(req.user.isAdmin){
@@ -140,6 +142,87 @@ commonController.getSortOptions = async (req, res) => {
         status:1,
         options: options
     })
+}
+
+
+commonController.getAllLeases = async (req,res) => {
+    let userId = req.user.id;
+    let houses = [];
+    if(req.user.isAdmin){
+        houses = await houseModal.find({occupied:1, userId:userId});
+    }
+    else{
+        houses = await houseModal.find({occupied:1, occupied_by:userId});
+    }
+
+    return res.json({
+        status:1,
+        houses: houses
+    });
+}
+
+commonController.raiseRequest = async (req,res) => {
+    let user = req.user;
+    let houseId = req.body.houseId;
+    if(!houseId){
+        return res.json({
+            status: 0,
+            message: "House id not found"
+        })
+    }
+    let house = await houseModal.findOne({id:houseId, occupied_by:user.id});
+    if(!house){
+        return res.json({
+            status: 0,
+            message: "House not found"
+        })
+    }
+    let message = req.body.message;
+    if(!message){
+        return res.json({
+            status: 0,
+            message: "Message not found"
+        });
+    }
+
+    let request = new raiseRequestModal({
+        id: uuid.v4(),
+        userId: user.id,
+        houseId: houseId,
+        message: message,
+        adminUserId: house.userId,
+    });
+
+    try{
+        await request.save();
+    }catch(error){
+        return res.json({
+            status: 0,
+            message: "Something went wrong while saving request"
+        })
+    }
+    return res.json({
+        status: 1,
+        message: "Request raised successfully"
+    });
+    
+}
+
+commonController.showAllRequests = async (req,res) => {
+    let userId = req.user.id;
+    let requests = [];
+    if(req.user.isAdmin){
+        requests = await raiseRequestModal.find({"adminUserId": userId});
+    }
+    else{
+        requests = await raiseRequestModal.find({"userId": userId});
+    }
+
+    return res.json({
+        status:1,
+        "requests": requests
+    });
+
 }
 
 module.exports = commonController;
