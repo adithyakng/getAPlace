@@ -23,11 +23,11 @@
 .sender {
   background-color: rgb(149, 180, 103);
   float: right;
-  clear: left;
+  clear: both;
 }
 
 .receiver {
   background-color: rgb(210, 114, 114);
   float: left;
-  clear: right;
+  clear: both;
 }

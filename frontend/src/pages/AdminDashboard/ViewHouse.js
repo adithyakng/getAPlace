@@ -5,10 +5,15 @@ import types from "../../types/types";
 import ErrorModal from "../../ui-elements/ErrorModal/ErrorModal";
 import HouseListing from "../../components/HouseListing/HouseListing";
 
+import TuneIcon from "@mui/icons-material/Tune";
+import { IconButton } from "@mui/material";
+import SortAndFilter from "../../components/SortAndFilter/SortAndFilter";
+
 const ViewHouse = () => {
   // States
   const [housesArr, setHousesArr] = useState([]);
   const [errorModal, setErrorModal] = useState(new types.ErrorModalObject());
+  const [showFilter, setShowFilter] = useState(false);
 
   // UseEffect
   useEffect(() => {
@@ -16,6 +21,16 @@ const ViewHouse = () => {
   }, []);
 
   // Hnadlers
+  const updateHousesArr = (data) => {
+    let newHousesArr = [];
+    for (let i = 0; i < data.length; i++) {
+      newHousesArr.push(new types.NewHouseAdObject(data[i]));
+      newHousesArr[i].faqs = JSON.parse(newHousesArr[i].faqs);
+    }
+
+    setHousesArr(newHousesArr);
+  };
+
   const initHouseListings = async () => {
     const resp = await axios.post(
       "/admin/listHouses",
@@ -26,18 +41,28 @@ const ViewHouse = () => {
         },
       }
     );
-    let newHousesArr = [];
-    for (let i = 0; i < resp.data.length; i++) {
-      newHousesArr.push(new types.NewHouseAdObject(resp.data[i]));
-      newHousesArr[i].faqs = JSON.parse(newHousesArr[i].faqs);
-    }
-
-    setHousesArr(newHousesArr);
+    updateHousesArr(resp.data);
   };
 
   return (
     <>
       <ErrorModal errorModal={errorModal} setErrorModal={setErrorModal} />
+      <IconButton
+        sx={{ float: "right" }}
+        aria-label={"user houses filter"}
+        onClick={() => {
+          setShowFilter(true);
+        }}
+      >
+        <TuneIcon /> Filter
+      </IconButton>
+
+      <SortAndFilter
+        showFilter={showFilter}
+        setShowFilter={setShowFilter}
+        filterHousesHandler={updateHousesArr}
+      />
+      <div style={{ height: "5vh" }}></div>
       {housesArr.map((house) => {
         return (
           <>

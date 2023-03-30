@@ -64,7 +64,7 @@ const ViewHouseListing = ({ currHouse, setErrorModal, isView = false }) => {
             <IconButton
               aria-label={"Chat Room for " + house.id}
               onClick={() => {
-                window.open("/users/room/" + house.chatroomid);
+                window.open("/users/room/" + house.chatRoomId);
               }}
             >
               <ChatIcon />

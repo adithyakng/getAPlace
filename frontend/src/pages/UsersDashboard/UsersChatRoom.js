@@ -1,10 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import CustomTextField from "../../ui-elements/CustomTextField/CustomTextField";
 import "./styles.css";
 
 import SendIcon from "@mui/icons-material/Send";
-import { Button, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import CustomOutlinedInput from "../../ui-elements/CustomOutlinedInput/CustomOutlinedInput";
 
 const UsersChatRoom = () => {
@@ -14,8 +13,8 @@ const UsersChatRoom = () => {
   const sendMessage = async () => {
     try {
       const chatRoomId = window.location.pathname.split("/")[3];
-      const resp = await axios.post(
-        `/chats/${chatRoomId}`,
+      await axios.post(
+        `/chats?chatroomid=${chatRoomId}`,
         { ...message },
         {
           headers: {
@@ -26,7 +25,7 @@ const UsersChatRoom = () => {
 
       setChatRoomData([
         ...chatRoomData,
-        { message: message, isSender: true, name: "Me" },
+        { ...message, isSender: true, name: "Me" },
       ]);
       setMessage({ message: "" });
     } catch (e) {
@@ -44,13 +43,13 @@ const UsersChatRoom = () => {
   const initData = async () => {
     try {
       const chatroomId = window.location.pathname.split("/")[3];
-      const resp = await axios.get(`/chats/${chatroomId}`, {
+      const resp = await axios.get(`/chats?chatroomid=${chatroomId}`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("access_token"),
         },
       });
 
-      setChatRoomData(resp.data.chatRoomData);
+      setChatRoomData(resp.data.messages);
     } catch (e) {
       setChatRoomData([
         { message: "Hello Everyone", isSender: true, name: "Me" },

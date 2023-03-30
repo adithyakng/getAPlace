@@ -34,6 +34,7 @@ const ErrorModalObject = function (
 const NewHouseAdObject = function ({
   id = null,
   _id = null,
+  chatRoomId = null,
   features = { list: [], feature: "" },
   startDate = new Date(),
   cost = 0,
@@ -49,26 +50,9 @@ const NewHouseAdObject = function ({
   leaseAgreementmetadata = [],
   faqs = "",
 }) {
-  images = [
-    {
-      Location:
-        "https://fujifilm-x.com/wp-content/uploads/2021/01/gfx100s_sample_04_thum-1.jpg",
-      Key: "apple.jpg",
-    },
-    {
-      Location:
-        "https://images.unsplash.com/photo-1579353977828-2a4eab540b9a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c2FtcGxlfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
-      Key: "pineapple.jpg",
-    },
-
-    {
-      Location:
-        "https://dl.fujifilm-x.com/global/products/cameras/x-t3/sample-images/ff_x_t3_002.JPG",
-      Key: "greenapple.jpg",
-    },
-  ];
   this.id = id;
   this._id = _id;
+  this.chatRoomId = chatRoomId;
   this.startDate = dateFormat(startDate, "yyyy-mm-dd");
   this.features = features;
   if (Array.isArray(this.features)) {
@@ -110,11 +94,26 @@ const NewHouseAdObject = function ({
   this.faqs = faqs;
 };
 
+const FiltersObjectType = function ({
+  features = [],
+  bedroom = [],
+  bathroom = [],
+  amenities = [],
+  carpetArea = [],
+}) {
+  this.features = features;
+  this.amenities = amenities;
+  this.bedroom = bedroom;
+  this.bathroom = bathroom;
+  this.carpetArea = carpetArea;
+};
+
 const types = {
   SignupObject,
   LoginObject,
   ErrorModalObject,
   NewHouseAdObject,
+  FiltersObjectType,
 };
 
 export default types;
