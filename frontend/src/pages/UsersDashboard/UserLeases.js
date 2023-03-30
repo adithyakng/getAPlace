@@ -9,7 +9,7 @@ import TuneIcon from "@mui/icons-material/Tune";
 import { IconButton } from "@mui/material";
 import SortAndFilter from "../../components/SortAndFilter/SortAndFilter";
 
-const UsersViewHouse = () => {
+const UserLeases = () => {
   // States
   const [housesArr, setHousesArr] = useState([]);
   const [errorModal, setErrorModal] = useState(new types.ErrorModalObject());
@@ -32,17 +32,13 @@ const UsersViewHouse = () => {
   };
 
   const initHouseListings = async () => {
-    const resp = await axios.post(
-      "/users/listHouses",
-      {},
-      {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("access_token"),
-        },
-      }
-    );
+    const resp = await axios.get("/users/getAllLeases", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+      },
+    });
 
-    updateHousesArr(resp.data);
+    updateHousesArr(resp.data.houses);
   };
 
   return (
@@ -69,7 +65,7 @@ const UsersViewHouse = () => {
               currHouse={house}
               setErrorModal={setErrorModal}
               isView={true}
-              isViewLease={false}
+              isViewLease={true}
             />
           </>
         );
@@ -78,4 +74,4 @@ const UsersViewHouse = () => {
   );
 };
 
-export default UsersViewHouse;
+export default UserLeases;

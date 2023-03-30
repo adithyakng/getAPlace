@@ -19,6 +19,9 @@ import { red } from "@mui/material/colors";
 import QuizIcon from "@mui/icons-material/Quiz";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CustomButton from "../../ui-elements/CustomButton/CustomButton";
+import axios from "axios";
+import RaiseRequestsModal from "./RaiseRequestModal";
+import ViewAllRequestsModal from "./ViewAllRequestsModal";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -31,15 +34,41 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-const ViewHouseListing = ({ currHouse, setErrorModal, isView = false }) => {
+const ViewHouseListing = ({
+  currHouse,
+  setErrorModal,
+  isView = false,
+  isViewLease = false,
+}) => {
   // States
   const [house, setHouse] = useState(new types.NewHouseAdObject(currHouse));
-
   const [expanded, setExpanded] = React.useState(false);
+  const [showRaiseRequestModal, setShowRaiseRequestModal] = useState(false);
+  const [showAllRequestsModal, setShowAllRequestsModal] = useState(false);
 
   // Handlers
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const acceptLease = async () => {
+    try {
+      await axios.post(
+        "/users/submitLease",
+        {
+          houseId: house.id,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+        }
+      );
+
+      window.location.reload();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   // Custom Component
@@ -52,101 +81,145 @@ const ViewHouseListing = ({ currHouse, setErrorModal, isView = false }) => {
   }
 
   return (
-    <Card sx={{ maxWidth: 500, margin: "2%", float: "left" }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            Ad
-          </Avatar>
-        }
-        action={
-          <>
-            <IconButton
-              aria-label={"Chat Room for " + house.id}
-              onClick={() => {
-                window.open("/users/room/" + house.chatRoomId);
-              }}
-            >
-              <ChatIcon />
-            </IconButton>
-            <IconButton
-              aria-label="FAQs"
-              onClick={() => {
-                window.open("/users/faqs/" + house.id);
-              }}
-            >
-              <QuizIcon />
-            </IconButton>
-          </>
-        }
-        title={house._id}
-        subheader={house.startDate}
+    <>
+      <RaiseRequestsModal
+        showModal={showRaiseRequestModal}
+        setShowModal={setShowRaiseRequestModal}
+        houseId={house.id}
       />
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          <b>Address:</b> {house.address}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <b>No of bedrooms:</b> {house.bedroom}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <b>No of bathrooms:</b> {house.bathroom}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <b>Carpet area:</b> {house.carpetArea}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <b>Price:</b> {house.cost}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="Show More"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <ViewAllRequestsModal
+        showModal={showAllRequestsModal}
+        setShowModal={setShowAllRequestsModal}
+        houseId={house.id}
+      />
+
+      <Card sx={{ maxWidth: 500, margin: "2%", float: "left" }}>
+        <CardHeader
+          avatar={
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+              Ad
+            </Avatar>
+          }
+          action={
+            <>
+              <IconButton
+                aria-label={"Chat Room for " + house.id}
+                onClick={() => {
+                  window.open("/users/room/" + house.chatRoomId);
+                }}
+              >
+                <ChatIcon />
+              </IconButton>
+              <IconButton
+                aria-label="FAQs"
+                onClick={() => {
+                  window.open("/users/faqs/" + house.id);
+                }}
+              >
+                <QuizIcon />
+              </IconButton>
+            </>
+          }
+          title={house.id}
+          subheader={house.startDate}
+        />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            <Carousel navButtonsAlwaysVisible={false}>
-              {house.images.map((row) => {
-                return <Item imageLoc={row} />;
-              })}
-            </Carousel>
+            <b>Address:</b> {house.address}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <b>Features</b>
-            <ul>
-              {house.features.list.map((feature) => {
-                return <li>{feature}</li>;
-              })}
-            </ul>
+            <b>No of bedrooms:</b> {house.bedroom}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <b>Amenities</b>
-            <ul>
-              {house.amenities.list.map((amenity) => {
-                return <li>{amenity}</li>;
-              })}
-            </ul>
+            <b>No of bathrooms:</b> {house.bathroom}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            <CustomButton
-              id="viewlease"
-              name="viewlease"
-              value="View the agreement"
-              clickHandler={() => {
-                window.open(house.leaseAgreement[0]);
-              }}
-            />
+            <b>Carpet area:</b> {house.carpetArea}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <b>Price:</b> {house.cost}
           </Typography>
         </CardContent>
-      </Collapse>
-    </Card>
+        <CardActions disableSpacing>
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="Show More"
+          >
+            <ExpandMoreIcon />
+          </ExpandMore>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography variant="body2" color="text.secondary">
+              <Carousel navButtonsAlwaysVisible={false}>
+                {house.images.map((row) => {
+                  return <Item imageLoc={row} />;
+                })}
+              </Carousel>
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <b>Features</b>
+              <ul>
+                {house.features.list.map((feature) => {
+                  return <li>{feature}</li>;
+                })}
+              </ul>
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              <b>Amenities</b>
+              <ul>
+                {house.amenities.list.map((amenity) => {
+                  return <li>{amenity}</li>;
+                })}
+              </ul>
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {isViewLease ? (
+                <>
+                  <CustomButton
+                    id="raiserequests"
+                    name="raiserequest"
+                    value="Raise Maintenance Request"
+                    clickHandler={() => {
+                      setShowRaiseRequestModal(true);
+                    }}
+                  />
+                  <CustomButton
+                    id="viewrequests"
+                    name="viewrequests"
+                    value="View All Requests"
+                    clickHandler={() => {
+                      setShowAllRequestsModal(true);
+                    }}
+                  />
+                </>
+              ) : (
+                <>
+                  <CustomButton
+                    id="viewlease"
+                    name="viewlease"
+                    value="View the agreement"
+                    clickHandler={() => {
+                      setHouse({ ...house, isAgreementViewed: true });
+                      window.open(house.leaseAgreement[0]);
+                    }}
+                  />
+                  <CustomButton
+                    id="accpetlease"
+                    name="acceptlease"
+                    value="Accept the agreement"
+                    isDisabled={!house.isAgreementViewed}
+                    clickHandler={acceptLease}
+                  />
+                </>
+              )}
+            </Typography>
+          </CardContent>
+        </Collapse>
+      </Card>
+    </>
   );
 };
 

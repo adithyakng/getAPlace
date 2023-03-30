@@ -92,6 +92,7 @@ const NewHouseAdObject = function ({
   }
 
   this.faqs = faqs;
+  this.isAgreementVieweed = false;
 };
 
 const FiltersObjectType = function ({

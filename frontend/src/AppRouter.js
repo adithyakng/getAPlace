@@ -9,6 +9,7 @@ import ViewHouse from "./pages/AdminDashboard/ViewHouse";
 import UsersViewHouse from "./pages/UsersDashboard/UsersViewHouse";
 import UsersFAQs from "./pages/UsersDashboard/UsersFAQs";
 import UsersChatRoom from "./pages/UsersDashboard/UsersChatRoom";
+import UserLeases from "./pages/UsersDashboard/UserLeases";
 
 const AppRouter = Routes([
   {
@@ -52,6 +53,15 @@ const AppRouter = Routes([
     element: (
       <UsersDashboard>
         <UsersViewHouse />
+      </UsersDashboard>
+    ),
+  },
+
+  {
+    path: "/users/view/leases",
+    element: (
+      <UsersDashboard>
+        <UserLeases />
       </UsersDashboard>
     ),
   },

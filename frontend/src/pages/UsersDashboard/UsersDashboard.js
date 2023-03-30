@@ -3,6 +3,7 @@ import React from "react";
 import NavSidebar from "../NavSidebar/NavSidebar";
 
 import AddHomeIcon from "@mui/icons-material/AddHome";
+import HouseSidingIcon from "@mui/icons-material/HouseSiding";
 import HomeIcon from "@mui/icons-material/Home";
 
 const UsersDashboard = ({ children }) => {
@@ -16,6 +17,12 @@ const UsersDashboard = ({ children }) => {
             label: "View House Ads",
             icon: <HomeIcon />,
             href: "/users/ads/view",
+          },
+          {
+            key: "HousesGroup.ViewLeases",
+            label: "View Current Leases",
+            icon: <HouseSidingIcon />,
+            href: "/users/view/leases",
           },
         ],
       },
