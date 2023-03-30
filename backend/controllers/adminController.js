@@ -1,8 +1,10 @@
 const helpers = require("../helpers");
 const constants = require("../constants");
 const adminUserModal = require("../models/adminUserModel");
+const raiseRequestModal = require("../models/requestsModel");
 const houseModal = require("../models/houseModel");
 const s3Helper = require("../s3Helper");
+const { raiseRequest } = require("./commonController");
 
 const adminController = {};
 adminController.register = (req, res) => {
@@ -36,4 +38,16 @@ adminController.deleteHouse = async (req, res) => {
   }
   helpers.deleteHouse(req, res, house);
 };
+
+adminController.actOnRequest = async (req, res) => {
+  let requestId = req.body.requestId;
+  if(!requestId){
+    res.status(401).json({ status: 1, error: "Invalid request ID" });
+    return;
+  }
+  let request = await raiseRequestModal.findOne({id:requestId});
+  request.status = 1;
+  request.save();
+  res.status(200).json({status:1, message:"Request resolved successfully"});
+}
 module.exports = adminController;
