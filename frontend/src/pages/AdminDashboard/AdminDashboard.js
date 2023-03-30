@@ -5,6 +5,7 @@ import NavSidebar from "../NavSidebar/NavSidebar";
 import AddHomeIcon from "@mui/icons-material/AddHome";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import HomeIcon from "@mui/icons-material/Home";
+import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt";
 
 const AdminDashboard = ({ children }) => {
   const menuItemsGroups = [
@@ -29,6 +30,19 @@ const AdminDashboard = ({ children }) => {
             label: "View All Maintenenacec Requests",
             icon: <EngineeringIcon />,
             href: "/admin/view/requests",
+          },
+        ],
+      },
+    ],
+    [
+      {
+        key: "AdminChatGroup",
+        items: [
+          {
+            key: "AdminChatGroup.ChatBot",
+            label: "Chat with our Bot",
+            icon: <MarkUnreadChatAltIcon />,
+            href: "/chatgpt",
           },
         ],
       },

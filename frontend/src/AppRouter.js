@@ -11,6 +11,7 @@ import UsersFAQs from "./pages/UsersDashboard/UsersFAQs";
 import UsersChatRoom from "./pages/UsersDashboard/UsersChatRoom";
 import UserLeases from "./pages/UsersDashboard/UserLeases";
 import ViewAllRequestsModal from "./pages/AdminDashboard/ViewAllRequestsModal";
+import ChatGPT from "./pages/ChatGPT/ChatGPT";
 
 const AppRouter = Routes([
   {
@@ -88,6 +89,14 @@ const AppRouter = Routes([
     element: (
       <UsersDashboard>
         <UsersChatRoom />
+      </UsersDashboard>
+    ),
+  },
+  {
+    path: "/chatgpt",
+    element: (
+      <UsersDashboard>
+        <ChatGPT />
       </UsersDashboard>
     ),
   },

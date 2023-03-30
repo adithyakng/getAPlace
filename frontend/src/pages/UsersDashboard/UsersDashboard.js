@@ -5,6 +5,7 @@ import NavSidebar from "../NavSidebar/NavSidebar";
 import AddHomeIcon from "@mui/icons-material/AddHome";
 import HouseSidingIcon from "@mui/icons-material/HouseSiding";
 import HomeIcon from "@mui/icons-material/Home";
+import MarkUnreadChatAltIcon from "@mui/icons-material/MarkUnreadChatAlt";
 
 const UsersDashboard = ({ children }) => {
   const menuItemsGroups = [
@@ -23,6 +24,19 @@ const UsersDashboard = ({ children }) => {
             label: "View Current Leases",
             icon: <HouseSidingIcon />,
             href: "/users/view/leases",
+          },
+        ],
+      },
+    ],
+    [
+      {
+        key: "AdminChatGroup",
+        items: [
+          {
+            key: "AdminChatGroup.ChatBot",
+            label: "Chat with our Bot",
+            icon: <MarkUnreadChatAltIcon />,
+            href: "/chatgpt",
           },
         ],
       },

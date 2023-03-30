@@ -53,6 +53,7 @@ services:
     environment:
       GETAPLACE_NODE_PORT: ${GETAPLACE_NODE_PORT}
       GETAPLACE_NODE_MONGOURL: mongodb://${GETAPLACE_MONGO_HOST}:27017/${GETAPLACE_MONGO_DATABASE}
+      GETAPLACE_OPENAI_API_KEY: ${GETAPLACE_OPENAI_API_KEY}
 
   nginx:
     container_name: getaplace_proxy
