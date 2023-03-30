@@ -25,14 +25,12 @@ async function uploadFile(base64Data, fileType, acl = "public-read") {
 async function uploadImages(images) {
   let s3Images = [];
   let image, type;
-  for (let i = 0; i < images.length; i++) {
-    type = images[i].match(/^data:image\/([a-zA-Z]+);base64,/)[1];
-    image = await uploadFile(images[i].replace(/^data:image\/\w+;base64,/, ""), `image/${type}`);
-    if (image.status != 0) {
-      s3Images.push(image.s3Details);
-    }
+  type = images.match(/^data:image\/([a-zA-Z]+);base64,/)[1];
+  image = await uploadFile(images.replace(/^data:image\/\w+;base64,/, ""), `image/${type}`);
+  if (image.status != 0) {
+    s3Images.push(image.s3Details);
   }
-  if (images.length != s3Images.length) {
+  if (s3Images.length != 1) {
     return { status: 0, error: image.error };
   }
   return { status: 1, s3Details: s3Images };

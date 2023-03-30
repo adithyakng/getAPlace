@@ -197,18 +197,24 @@ async function addOrEditHouse(req, res, houseObject = false) {
   if (error.length != 0) {
     return res.status(400).json({ status: 0, error: error });
   } else {
-    house.images = [];
     if(body.images){
-      image = await s3Helper.uploadImages(body.images);
-      if (image.status != 0) {
-        house.images = image.s3Details;
-      } else {
-        error.push(image.error);
+      for (let i = 0; i < body.images.length; i++) {
+        if (!body.images[i].startsWith("https")) {
+          image = await s3Helper.uploadImages(body.images[i]);
+          if (image.status != 0) {
+            if(!house.images){
+              house.images = [];
+            }
+            house.images.push(image.s3Details);
+          } else {
+            error.push(image.error);
+          }
+        }
       }
     }
-    if(body.leaseAgreement){
+    if(body.leaseAgreement && !body.leaseAgreement[0].startsWith('https')){
       leaseAgreementFile = await s3Helper.uploadFile(
-        body.leaseAgreement[0],
+        body.leaseAgreement[0].replace(/^data:application\/\w+;base64,/,""),
         "application/pdf"
       );
       if (leaseAgreementFile.status) {
