@@ -228,7 +228,7 @@ commonController.chatGpt = async (req, res) => {
 
   const { Configuration, OpenAIApi } = require("openai");
   const configuration = new Configuration({
-    apiKey: process.env.GETAPLAE_OPENAI_API_KEY,
+    apiKey: process.env.GETAPLACE_OPENAI_API_KEY,
   });
   const openai = new OpenAIApi(configuration);
   const response = await openai.createCompletion({
