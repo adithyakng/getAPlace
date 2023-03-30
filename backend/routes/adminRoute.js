@@ -9,4 +9,6 @@ routes.post("/addHouse",validateToken,adminController.addHouse);
 routes.post("/listHouses",validateToken,commonController.listHouses);
 routes.put("/editHouse",validateToken,adminController.editHouse);
 routes.delete("/deleteHouse",validateToken,adminController.deleteHouse);
+routes.post("/sortHouses",validateToken,commonController.sortHouses);
+routes.post("/sortOptions",validateToken,commonController.getSortOptions);
 module.exports = routes;

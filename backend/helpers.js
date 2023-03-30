@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 let moment = require("moment");
+const uuid = require("uuid");
 
 const { adminUser, normalUser } = require("./constants");
 const userModal = require("./models/userModel");
@@ -77,7 +78,8 @@ async function registerUser(req, res, userTypeModal) {
     return;
   }
 
-  const newUser = new userTypeModal({
+  let newUser = new userTypeModal({
+    id: uuid.v4(),
     name: body.name,
     email: body.email,
     password: await bcrypt.hash(body.password.toString(), 15),

@@ -2,6 +2,7 @@ const loginController = {}
 const bcrypt = require('bcrypt')
 const userModal = require("../models/userModel");
 const helpers = require('../helpers');
+const houseModal = require('../models/houseModel');
 
 loginController.index = (req,res) => {
     helpers.registerUser(req,res,userModal);

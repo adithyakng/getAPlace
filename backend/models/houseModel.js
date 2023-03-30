@@ -73,6 +73,9 @@ const house = new mongoose.Schema({
   faqs: {
     type: String,
   },
+  occupied_by:{
+    type: String
+  }
 });
 
 house.pre(/^find/, function () {
