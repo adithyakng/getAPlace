@@ -9,4 +9,5 @@ routes.post("/sortOptions",validateToken,commonController.getSortOptions);
 routes.get("/getAllLeases",validateToken,commonController.getAllLeases);
 routes.post("/raiseRequest",validateToken,commonController.raiseRequest);
 routes.get("/getAllRequests",validateToken,commonController.showAllRequests);
+routes.post("/chatGpt",validateToken,commonController.chatGpt);
 module.exports = routes;
