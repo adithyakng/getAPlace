@@ -75,6 +75,9 @@ const house = new mongoose.Schema({
   },
   occupied_by:{
     type: String
+  },
+  chatRoomId:{
+    type: String
   }
 });
 
