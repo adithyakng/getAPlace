@@ -27,7 +27,7 @@ async function uploadImages(images) {
   let image, type;
   for (let i = 0; i < images.length; i++) {
     type = images[i].match(/^data:image\/([a-zA-Z]+);base64,/)[1];
-    image = await uploadFile(images[i], `image/${type}`);
+    image = await uploadFile(images[i].replace(/^data:image\/\w+;base64,/, ""), `image/${type}`);
     if (image.status != 0) {
       s3Images.push(image.s3Details);
     }
