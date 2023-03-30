@@ -10,6 +10,7 @@ import UsersViewHouse from "./pages/UsersDashboard/UsersViewHouse";
 import UsersFAQs from "./pages/UsersDashboard/UsersFAQs";
 import UsersChatRoom from "./pages/UsersDashboard/UsersChatRoom";
 import UserLeases from "./pages/UsersDashboard/UserLeases";
+import ViewAllRequestsModal from "./pages/AdminDashboard/ViewAllRequestsModal";
 
 const AppRouter = Routes([
   {
@@ -45,6 +46,14 @@ const AppRouter = Routes([
     element: (
       <AdminDashboard>
         <ViewHouse />
+      </AdminDashboard>
+    ),
+  },
+  {
+    path: "/admin/view/requests",
+    element: (
+      <AdminDashboard>
+        <ViewAllRequestsModal />
       </AdminDashboard>
     ),
   },

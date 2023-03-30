@@ -44,8 +44,6 @@ const ViewAllRequestsModal = ({ showModal, setShowModal, houseId }) => {
     }
   };
 
-  console.log(houseId);
-
   return (
     <Modal
       aria-labelledby="transition-modal-title"

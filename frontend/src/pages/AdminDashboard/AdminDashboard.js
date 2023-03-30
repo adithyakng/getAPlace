@@ -3,6 +3,7 @@ import React from "react";
 import NavSidebar from "../NavSidebar/NavSidebar";
 
 import AddHomeIcon from "@mui/icons-material/AddHome";
+import EngineeringIcon from "@mui/icons-material/Engineering";
 import HomeIcon from "@mui/icons-material/Home";
 
 const AdminDashboard = ({ children }) => {
@@ -22,6 +23,12 @@ const AdminDashboard = ({ children }) => {
             label: "View House Ads",
             icon: <HomeIcon />,
             href: "/admin/ads/view",
+          },
+          {
+            key: "HousesGroup.ViewAllRequests",
+            label: "View All Maintenenacec Requests",
+            icon: <EngineeringIcon />,
+            href: "/admin/view/requests",
           },
         ],
       },
