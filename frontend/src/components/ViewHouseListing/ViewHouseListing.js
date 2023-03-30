@@ -74,8 +74,8 @@ const ViewHouseListing = ({
   // Custom Component
   function Item({ imageLoc }) {
     return (
-      <Paper>
-        <img src={imageLoc} alt={imageLoc} width="100%" height="100%" />
+      <Paper style={{ width: "50vh" }}>
+        <img src={imageLoc} alt={imageLoc} width="100%" height="500px" />
       </Paper>
     );
   }

@@ -28,11 +28,19 @@ const AppRouter = Routes([
   },
   {
     path: "/admin/dashboard",
-    element: <AdminDashboard />,
+    element: (
+      <AdminDashboard>
+        <ViewHouse />
+      </AdminDashboard>
+    ),
   },
   {
     path: "/users/dashboard",
-    element: <UsersDashboard />,
+    element: (
+      <UsersDashboard>
+        <UsersViewHouse />
+      </UsersDashboard>
+    ),
   },
   {
     path: "/admin/ads/add",
