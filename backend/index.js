@@ -27,7 +27,7 @@ app.use("/api/health", healthRoute);
 app.use("/api/users", loginRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/house", houseRoute);
-app.use("/api/customer",customerRoute)
+app.use("/api/users",customerRoute)
 
 app.listen(process.env.GETAPLACE_NODE_PORT, async () => {
   // Connection to MongoDb
