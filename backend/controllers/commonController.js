@@ -3,10 +3,10 @@ const houseModal = require('../models/houseModel');
 commonController.listHouses = async (req,res) => {
     let houses = [];
     if(req.user.isAdmin){
-        houses = await houseModal.find({userId:req.user.id});
+        houses = await houseModal.find({userId:req.user.id,occupied:0});
     }
     else{
-        houses = await houseModal.find({});
+        houses = await houseModal.find({occupied:0});
     }
     return res.status(200).json(houses);
 }
