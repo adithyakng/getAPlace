@@ -52,10 +52,10 @@ commonController.sortHouses = async (req,res) => {
         query.push({occupied: 0});
     }
     if(req.body.bedroom){
-        query.push({bedroom: req.body.bedroom});
+        query.push({bedroom: {'$in':req.body.bedroom}});
     }
     if(req.body.bathroom){
-        query.push({bathroom: req.body.bathroom});
+        query.push({bathroom: {'$in':req.body.bedroom}});
     }
     if(req.body.minCarpetArea){
         query.push({carpetArea: {'$gte':req.body.minCarpetArea}});
