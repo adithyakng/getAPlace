@@ -8,6 +8,7 @@ const userModal = require("./models/userModel");
 const adminUserModal = require("./models/adminUserModel");
 const s3Helper = require("./s3Helper");
 const houseModal = require("./models/houseModel");
+const chatModal = require("./models/chatsModel");
 
 require("dotenv").config();
 
@@ -197,20 +198,24 @@ async function addOrEditHouse(req, res, houseObject = false) {
     return res.status(400).json({ status: 0, error: error });
   } else {
     house.images = [];
-    image = await s3Helper.uploadImages(body.images);
-    if (image.status != 0) {
-      house.images = image.s3Details;
-    } else {
-      error.push(image.error);
+    if(body.images){
+      image = await s3Helper.uploadImages(body.images);
+      if (image.status != 0) {
+        house.images = image.s3Details;
+      } else {
+        error.push(image.error);
+      }
     }
-    leaseAgreementFile = await s3Helper.uploadFile(
-      body.leaseAgreement[0],
-      "application/pdf"
-    );
-    if (leaseAgreementFile.status) {
-      house.leaseAgreement = leaseAgreementFile.s3Details;
-    } else {
-      error.push("Lease Agreement cannot be uploaded");
+    if(body.leaseAgreement){
+      leaseAgreementFile = await s3Helper.uploadFile(
+        body.leaseAgreement[0],
+        "application/pdf"
+      );
+      if (leaseAgreementFile.status) {
+        house.leaseAgreement = leaseAgreementFile.s3Details;
+      } else {
+        error.push("Lease Agreement cannot be uploaded");
+      }
     }
   }
   if (error.length != 0) {
@@ -218,6 +223,16 @@ async function addOrEditHouse(req, res, houseObject = false) {
   }
   try {
     await house.save();
+    if(!house.chatRoomId){
+      let chatRoom = new chatModal({
+        id: uuid.v4(),
+        house_id: house.id,
+        messages: []
+      });
+      await chatRoom.save();
+      house.chatRoomId = chatRoom.id;
+      await house.save();
+    }
   } catch (error) {
     res
       .status(400)
