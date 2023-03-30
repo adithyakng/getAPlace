@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter as Routes, Navigate } from "react-router-dom";
+import { createBrowserRouter as Routes } from "react-router-dom";
 
 import Auth from "./pages/Auth/Auth";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
@@ -12,11 +12,12 @@ import UsersChatRoom from "./pages/UsersDashboard/UsersChatRoom";
 import UserLeases from "./pages/UsersDashboard/UserLeases";
 import ViewAllRequestsModal from "./pages/AdminDashboard/ViewAllRequestsModal";
 import ChatGPT from "./pages/ChatGPT/ChatGPT";
+import Homepage from "./pages/Homepage/Homepage";
 
 const AppRouter = Routes([
   {
     path: "",
-    element: <Navigate to="/users/auth" replace />,
+    element: <Homepage />,
   },
   {
     path: "/users/auth",
