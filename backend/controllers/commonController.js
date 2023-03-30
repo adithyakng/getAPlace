@@ -58,19 +58,19 @@ commonController.sortHouses = async (req,res) => {
         query.push({bathroom: req.body.bathroom});
     }
     if(req.body.minCarpetArea){
-        query.push({carpetArea: {'$gte':req.body.carpetArea}});
+        query.push({carpetArea: {'$gte':req.body.minCarpetArea}});
     }
     if(req.body.maxCarpetArea){
-        query.push({carpetArea: {'$lte':req.body.carpetArea}});
+        query.push({carpetArea: {'$lte':req.body.maxCarpetArea}});
     }
     if(req.body.features){
         query.push({features: {'$all':req.body.features}});
     }
     if(req.body.minCost){
-        query.push({cost: {'$gte':req.body.cost}});
+        query.push({cost: {'$gte':req.body.minCost}});
     }
     if(req.body.maxCost){
-        query.push({cost: {'$lte':req.body.cost}});
+        query.push({cost: {'$lte':req.body.maxCost}});
     }
     if(req.body.amenities){
         query.push({amenities: {'$all':req.body.amenities}});
