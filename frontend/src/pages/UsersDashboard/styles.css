@@ -1,0 +1,33 @@
+.chat_container {
+  width: 95%;
+  height: 70vh;
+  background-color: var(--main-bg-color2);
+  box-shadow: 5px 5px 20px 2px black;
+  padding: 2%;
+  margin: 1%;
+  border-radius: 8px;
+}
+
+.chat_input {
+  position: relative;
+  bottom: 0px;
+}
+
+.chat_message {
+  width: 45%;
+  font-weight: bold;
+  padding: 1%;
+  border-radius: 5%;
+}
+
+.sender {
+  background-color: rgb(149, 180, 103);
+  float: right;
+  clear: left;
+}
+
+.receiver {
+  background-color: rgb(210, 114, 114);
+  float: left;
+  clear: right;
+}

@@ -13,6 +13,7 @@ import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
+import ChatIcon from "@mui/icons-material/Chat";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import QuizIcon from "@mui/icons-material/Quiz";
@@ -59,14 +60,24 @@ const ViewHouseListing = ({ currHouse, setErrorModal, isView = false }) => {
           </Avatar>
         }
         action={
-          <IconButton
-            aria-label="FAQs"
-            onClick={() => {
-              window.open("/users/faqs/" + house.id);
-            }}
-          >
-            <QuizIcon />
-          </IconButton>
+          <>
+            <IconButton
+              aria-label={"Chat Room for " + house.id}
+              onClick={() => {
+                window.open("/users/room/" + house.chatroomid);
+              }}
+            >
+              <ChatIcon />
+            </IconButton>
+            <IconButton
+              aria-label="FAQs"
+              onClick={() => {
+                window.open("/users/faqs/" + house.id);
+              }}
+            >
+              <QuizIcon />
+            </IconButton>
+          </>
         }
         title={house._id}
         subheader={house.startDate}
