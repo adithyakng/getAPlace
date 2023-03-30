@@ -8,6 +8,7 @@ import AddHouse from "./pages/AdminDashboard/AddHouse";
 import ViewHouse from "./pages/AdminDashboard/ViewHouse";
 import UsersViewHouse from "./pages/UsersDashboard/UsersViewHouse";
 import UsersFAQs from "./pages/UsersDashboard/UsersFAQs";
+import UsersChatRoom from "./pages/UsersDashboard/UsersChatRoom";
 
 const AppRouter = Routes([
   {
@@ -60,6 +61,14 @@ const AppRouter = Routes([
     element: (
       <UsersDashboard>
         <UsersFAQs />
+      </UsersDashboard>
+    ),
+  },
+  {
+    path: "/users/room/*",
+    element: (
+      <UsersDashboard>
+        <UsersChatRoom />
       </UsersDashboard>
     ),
   },
