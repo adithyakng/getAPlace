@@ -9,6 +9,7 @@ import Fade from "@mui/material/Fade";
 import axios from "axios";
 import CustomMultiSelect from "../../ui-elements/CustomMultiSelect/CustomMultiSelect";
 import CustomButton from "../../ui-elements/CustomButton/CustomButton";
+import CustomSlider from "../../ui-elements/CustomSlider/CustomSlider";
 import types from "../../types/types";
 
 const style = {
@@ -55,17 +56,64 @@ const SortAndFilter = ({ showFilter, setShowFilter, filterHousesHandler }) => {
     const name = e.target.name;
     const value = e.target.value;
 
-    setFilterOptions({ ...filtersOptions, [name]: value });
+    let newData = { ...filtersOptions };
+    newData[name] = newData[name].map((row) => {
+      return { ...row, isSelected: false };
+    });
+
+    for (let i = 0; i < value.length; i++) {
+      newData[name] = newData[name].map((row) => {
+        if (row.label === value[i]) {
+          row.isSelected = true;
+        }
+
+        return row;
+      });
+    }
+
+    setFilterOptions(newData);
   };
 
   const fetchFilteredHousesHandler = async () => {
     try {
       const userType = window.location.pathname.split("/")[1];
-      const resp = await axios.post(`/${userType}/sortHouses`, filtersOptions, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("access_token"),
+      const bedroom = filtersOptions["bedroom"]
+        .filter((childRow) => childRow.isSelected)
+        .map((row) => row.label);
+      const bathroom = filtersOptions["bathroom"]
+        .filter((childRow) => childRow.isSelected)
+        .map((row) => row.label);
+      const features = filtersOptions["features"]
+        .filter((childRow) => childRow.isSelected)
+        .map((row) => row.label);
+      const amenities = filtersOptions["amenities"]
+        .filter((childRow) => childRow.isSelected)
+        .map((row) => row.label);
+
+      let arr = filtersOptions["defaultCarpetArea"];
+      let step = Math.ceil((arr[1] - arr[0]) / 100);
+      const carpetArea = filtersOptions["carpetArea"].map((row) => row * step);
+
+      arr = filtersOptions["defaultCost"];
+      step = Math.ceil((arr[1] - arr[0]) / 100);
+      const cost = filtersOptions["cost"].map((row) => row * step);
+
+      const resp = await axios.post(
+        `/${userType}/sortHouses`,
+        {
+          bedroom,
+          bathroom,
+          features,
+          amenities,
+          carpetArea: carpetArea,
+          cost: cost,
         },
-      });
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+        }
+      );
       filterHousesHandler(resp.data.houses);
     } catch (e) {
       filterHousesHandler(new types.FiltersObjectType());
@@ -117,6 +165,20 @@ const SortAndFilter = ({ showFilter, setShowFilter, filterHousesHandler }) => {
             id={"features"}
             value={filtersOptions}
             setValue={changeHandler}
+          />
+          <CustomSlider
+            label={"Carpet Area"}
+            labelName={"carpetArea"}
+            defaultLabelName={"defaultCarpetArea"}
+            value={filtersOptions}
+            setValue={setFilterOptions}
+          />
+          <CustomSlider
+            label={"Cost"}
+            labelName={"cost"}
+            defaultLabelName={"defaultCost"}
+            value={filtersOptions}
+            setValue={setFilterOptions}
           />
           <CustomButton
             id="applyfilters"

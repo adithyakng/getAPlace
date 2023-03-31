@@ -6,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
+import { Checkbox, ListItemText } from "@mui/material";
 
 const CustomMultiTypeInput = ({ label, labelName, id, value, setValue }) => {
   const ITEM_HEIGHT = 48;
@@ -40,7 +41,11 @@ const CustomMultiTypeInput = ({ label, labelName, id, value, setValue }) => {
           id={id}
           name={labelName}
           multiple
-          value={value[labelName]}
+          value={value[labelName]
+            .filter((row) => {
+              return row.isSelected === true;
+            })
+            .map((row) => row.label)}
           onChange={setValue}
           input={<OutlinedInput id="select-multiple-chip" label={label} />}
           renderValue={(selected) => (
@@ -52,13 +57,24 @@ const CustomMultiTypeInput = ({ label, labelName, id, value, setValue }) => {
           )}
           MenuProps={MenuProps}
         >
-          {value[labelName].map((name) => (
+          {value[labelName].map((row) => (
             <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, value[labelName], theme)}
+              key={row.label}
+              value={row.label}
+              style={getStyles(
+                row.label,
+                value[labelName].map((row) => row.label),
+                theme
+              )}
             >
-              {name}
+              <Checkbox
+                checked={
+                  value[labelName].filter(
+                    (childRow) => childRow.label === row.label
+                  )["isSelected"]
+                }
+              />
+              <ListItemText primary={row.label} />
             </MenuItem>
           ))}
         </Select>

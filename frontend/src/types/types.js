@@ -96,17 +96,30 @@ const NewHouseAdObject = function ({
 };
 
 const FiltersObjectType = function ({
-  features = [],
+  features = [{}],
   bedroom = [],
   bathroom = [],
   amenities = [],
   carpetArea = [],
+  cost = [],
 }) {
-  this.features = features;
-  this.amenities = amenities;
-  this.bedroom = bedroom;
-  this.bathroom = bathroom;
+  this.features = features.map((row) => {
+    return { label: row, isSelected: false };
+  });
+  this.amenities = amenities.map((row) => {
+    return { label: row, isSelected: false };
+  });
+  this.bedroom = bedroom.map((row) => {
+    return { label: row, isSelected: false };
+  });
+  this.bathroom = bathroom.map((row) => {
+    return { label: row, isSelected: false };
+  });
   this.carpetArea = carpetArea;
+  this.cost = cost;
+
+  this.defaultCost = cost;
+  this.defaultCarpetArea = carpetArea;
 };
 
 const types = {
