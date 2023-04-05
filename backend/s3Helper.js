@@ -26,14 +26,17 @@ async function uploadImages(images) {
   let s3Images = [];
   let image, type;
   type = images.match(/^data:image\/([a-zA-Z]+);base64,/)[1];
-  image = await uploadFile(images.replace(/^data:image\/\w+;base64,/, ""), `image/${type}`);
+  image = await uploadFile(
+    images.replace(/^data:image\/\w+;base64,/, ""),
+    `image/${type}`
+  );
   if (image.status != 0) {
     s3Images.push(image.s3Details);
   }
   if (s3Images.length != 1) {
     return { status: 0, error: image.error };
   }
-  return { status: 1, s3Details: s3Images };
+  return { status: 1, s3Details: s3Images[0] };
 }
 
 function getS3Client() {

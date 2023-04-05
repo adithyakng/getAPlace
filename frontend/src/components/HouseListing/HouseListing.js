@@ -59,8 +59,6 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
         title: "Creating Advertisement Successful!",
         body: "A new listing has been added successfully",
       });
-
-      window.location.reload();
     } catch (error) {
       setErrorModal({
         show: true,
@@ -123,8 +121,12 @@ const HouseListing = ({ currHouse, setErrorModal, isView = false }) => {
   // Custom Component
   function Item({ imageLoc }) {
     return (
-      <Paper sx={{ position: "relative", left: "25%" }}>
-        <img src={imageLoc} alt={imageLoc} width="100%" height="100%" />
+      <Paper sx={{ position: "relative", left: "35%" }}>
+        <img
+          src={imageLoc}
+          alt={imageLoc}
+          style={{ maxWidth: "100%", height: "250px" }}
+        />
       </Paper>
     );
   }

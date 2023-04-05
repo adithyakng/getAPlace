@@ -6,9 +6,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function ErrorModal({ errorModal, setErrorModal }) {
+export default function ErrorModal({
+  errorModal,
+  setErrorModal,
+  children = () => {},
+}) {
   const handleClose = () => {
     setErrorModal({ ...errorModal, show: false });
+    children();
   };
 
   return (

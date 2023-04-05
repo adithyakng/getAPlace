@@ -49,7 +49,7 @@ const UsersDashboard = ({ children }) => {
             key: "AccountGroup.Logout",
             label: "Logout User",
             icon: <AddHomeIcon />,
-            href: "/users/auth",
+            href: "/",
           },
         ],
       },

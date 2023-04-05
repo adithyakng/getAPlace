@@ -10,7 +10,13 @@ const AddHouse = () => {
 
   return (
     <>
-      <ErrorModal errorModal={errorModal} setErrorModal={setErrorModal} />
+      <ErrorModal
+        errorModal={errorModal}
+        setErrorModal={setErrorModal}
+        children={() => {
+          window.location.reload();
+        }}
+      />
       <HouseListing
         currHouse={{}}
         errorModal={errorModal}

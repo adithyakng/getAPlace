@@ -55,7 +55,7 @@ const AdminDashboard = ({ children }) => {
             key: "AccountGroup.Logout",
             label: "Logout Admin",
             icon: <AddHomeIcon />,
-            href: "/admin/auth",
+            href: "/",
           },
         ],
       },

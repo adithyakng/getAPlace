@@ -43,7 +43,13 @@ const UserLeases = () => {
 
   return (
     <>
-      <ErrorModal errorModal={errorModal} setErrorModal={setErrorModal} />
+      <ErrorModal
+        errorModal={errorModal}
+        setErrorModal={setErrorModal}
+        children={() => {
+          window.location.reload();
+        }}
+      />
       <IconButton
         sx={{ float: "right" }}
         aria-label={"user houses filter"}

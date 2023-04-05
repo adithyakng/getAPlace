@@ -41,7 +41,7 @@ const ViewHouseListing = ({
   isViewLease = false,
 }) => {
   // States
-  const [house, setHouse] = useState(new types.NewHouseAdObject(currHouse));
+  const [house, setHouse] = useState(currHouse);
   const [expanded, setExpanded] = React.useState(false);
   const [showRaiseRequestModal, setShowRaiseRequestModal] = useState(false);
   const [showAllRequestsModal, setShowAllRequestsModal] = useState(false);
@@ -65,8 +65,13 @@ const ViewHouseListing = ({
         }
       );
 
-      window.location.reload();
+      setErrorModal(
+        "Thank you for accepting the lease. You can now view your leases in the leases section."
+      );
     } catch (e) {
+      setErrorModal(
+        "Unable to accept the current lease. Please try again later!"
+      );
       console.log(e);
     }
   };
