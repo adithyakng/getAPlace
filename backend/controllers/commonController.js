@@ -47,41 +47,38 @@ commonController.submitLease = async (req, res) => {
   });
 };
 
-commonController.sortHouses = async (req, res) => {
-  let query = [];
-  if (!req.user.isAdmin) {
-    query.push({ occupied: 0 });
-  }
-  if (req.body.bedroom) {
-    query.push({ bedroom: { $in: req.body.bedroom } });
-  }
-  if (req.body.bathroom) {
-    query.push({ bathroom: { $in: req.body.bedroom } });
-  }
-  if (req.body.minCarpetArea) {
-    query.push({ carpetArea: { $gte: req.body.minCarpetArea } });
-  }
-  if (req.body.maxCarpetArea) {
-    query.push({ carpetArea: { $lte: req.body.maxCarpetArea } });
-  }
-  if (req.body.features) {
-    query.push({ features: { $all: req.body.features } });
-  }
-  if (req.body.minCost) {
-    query.push({ cost: { $gte: req.body.minCost } });
-  }
-  if (req.body.maxCost) {
-    query.push({ cost: { $lte: req.body.maxCost } });
-  }
-  if (req.body.amenities) {
-    query.push({ amenities: { $all: req.body.amenities } });
-  }
-  let houses;
-  if (query.length == 0) {
-    houses = await houseModal.find();
-  } else {
-    houses = await houseModal.find({ $and: query });
-  }
+commonController.sortHouses = async (req,res) => {
+    let query = [];
+    if(!req.user.isAdmin){ 
+        query.push({occupied: 0});
+    }
+    if(req.body.bedroom.length != 0){
+        query.push({bedroom: {'$in':req.body.bedroom}});
+    }
+    if(req.body.bathroom.length != 0){
+        query.push({bathroom: {'$in':req.body.bedroom}});
+    }
+    if(req.body.carpetArea.length != 0){
+        query.push({carpetArea: {'$gte':req.body.carpetArea[0]}});
+        query.push({carpetArea: {'$lte':req.body.carpetArea[1]}});
+    }
+    if(req.body.features.length != 0){
+        query.push({features: {'$all':req.body.features}});
+    }
+    if(req.body.cost.length != 0){
+        query.push({cost: {'$gte':req.body.cost[0]}});
+        query.push({cost: {'$lte':req.body.cost[1]}});
+    }
+    if(req.body.amenities.length != 0){
+        query.push({amenities: {'$all':req.body.amenities}});
+    }
+    let houses;
+    if(query.length == 0){
+        houses = await houseModal.find();
+    }
+    else{
+        houses = await houseModal.find({$and:query})
+    }
   return res.json({
     status: 1,
     houses: houses,
