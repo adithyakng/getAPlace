@@ -15,4 +15,6 @@ const toBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-module.exports = { extractBase64fromFiles, toBase64 };
+const exportObj = { extractBase64fromFiles, toBase64 };
+
+export default exportObj;
