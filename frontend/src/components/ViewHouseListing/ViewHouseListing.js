@@ -65,13 +65,19 @@ const ViewHouseListing = ({
         }
       );
 
-      setErrorModal(
-        "Thank you for accepting the lease. You can now view your leases in the leases section."
-      );
+      debugger;
+      setErrorModal({
+        show: true,
+        title: "Accepted Lease Successfully!",
+        body: "Thank you for accepting the lease. You can now view your leases in the leases section.",
+      });
     } catch (e) {
-      setErrorModal(
-        "Unable to accept the current lease. Please try again later!"
-      );
+      setErrorModal({
+        show: true,
+        title: "Accepting Lease Failed!",
+        body: "We are unable to process the lease now. Please try again later!",
+      });
+
       console.log(e);
     }
   };
