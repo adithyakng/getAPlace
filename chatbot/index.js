@@ -94,30 +94,24 @@ const coursesJson = [
 const functions = require("firebase-functions");
 const { WebhookClient } = require("dialogflow-fulfillment");
 
-// Custom packages
-const intentHandlers = require("./intentHandlers");
-
 process.env.DEBUG = "dialogflow:debug"; // enables lib debugging statements
 
 const extractResponseFromJson = (keyData, data) => {
   for (let i = 0; i < data.length; i++) {
     let isValid = true;
     for (const [name, value] of Object.entries(keyData)) {
-      if (data[i][key][name] !== value) {
+      if (data[i].key.name !== value) {
         isValid = false;
       }
     }
 
     if (isValid) {
-      return data[i][key]["responseMessage"];
+      return data[i].responseMessage;
     }
   }
 
   return "Sorry! we couldn't find the requested information right now. Please try again later!";
 };
-
-// Custom packages
-const utils = require("./utils");
 
 const welcome = (agent) => {
   agent.add(`Welcome to Team 11's Virtual Assistant!`);
@@ -129,19 +123,19 @@ const fallback = (agent) => {
   agent.add(`I'm sorry, can you repeat your query?`);
 };
 
-const coursesIntent = async (agent) => {
+const coursesIntent = (agent) => {
   //Here we get the type of the utterance
   const courses = agent.parameters.courses;
   const branch = agent.parameters.branch;
   const department = agent.parameters.department;
-  const type = agents.parameter.type;
-  const subject = agents.parameter.subject;
+  const type = agent.parameter.type;
+  const subject = agent.parameter.subject;
 
   let resp = "";
   if (type == "prerequisites") {
-    resp = utils.extractResponseFromJson({ subject }, preReqJson);
+    resp = extractResponseFromJson({ subject }, preReqJson);
   } else {
-    resp = utils.extractResponseFromJson(
+    resp = extractResponseFromJson(
       { courses, branch, department },
       coursesJson
     );
@@ -151,7 +145,7 @@ const coursesIntent = async (agent) => {
 };
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
-  async (request, response) => {
+  (request, response) => {
     const agent = new WebhookClient({ request, response });
     console.log(
       "Dialogflow Request headers: " + JSON.stringify(request.headers)
