@@ -132,7 +132,7 @@ const coursesIntent = (agent) => {
   const subject = agent.parameter.subject;
 
   let resp = "";
-  if (type == "prerequisites") {
+  if (type == "prerequisite") {
     resp = extractResponseFromJson({ subject }, preReqJson);
   } else {
     resp = extractResponseFromJson(
