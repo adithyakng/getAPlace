@@ -44,17 +44,6 @@ const coursesJson = [
       type: "popular",
       courses: "course",
       department: "computer science",
-      branch: "department",
-    },
-    responseMessage:
-      "Popular courses are Advanced Data Structures (ADS), Human Computer Interaction (HCI), Analysis of Algorithm (AOA), Distributed Operating System Principles (DOSP), Machine Learning (ML)",
-  },
-
-  {
-    key: {
-      type: "popular",
-      courses: "course",
-      department: "computer science",
     },
     responseMessage:
       "Popular courses are Advanced Data Structures (ADS), Human Computer Interaction (HCI), Analysis of Algorithm (AOA), Distributed Operating System Principles (DOSP), Machine Learning (ML)",
@@ -67,16 +56,6 @@ const coursesJson = [
       department: "computer science",
     },
     responseMessage: "Mandatory core course is Analysis of Algorithms (AOA)",
-  },
-
-  {
-    key: {
-      type: "tough",
-      courses: "course",
-      department: "computer science",
-    },
-    responseMessage:
-      "Tough courses in CS major are Machine Learning (ML), Mathematics for Intelligence Systems (MIS), Analysis of Algorithms (AOA)",
   },
 
   {
