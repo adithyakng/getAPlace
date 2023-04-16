@@ -144,6 +144,33 @@ const coursesIntent = (agent) => {
   agent.add(resp);
 };
 
+function mapToI20Intent(agent) {
+  let i20 = agent.parameters.i20;
+  let advisor = agent.parameters.advisor;
+
+  if (i20) {
+    let s =
+      "All I20 related topics are managed by International Student Center at University of Florida";
+    s += "The website address is https://internationalcenter.ufl.edu/";
+    agent.add(s);
+    return;
+  } else if (advisor) {
+    let s =
+      "International Student Advisors are based on the first letter of your name. Here are the details";
+    let k = `
+            For A, B, X Ms. Gardenia Bazán
+            For C, D, E, F  Ms. Danielle Black
+            For G, H    Ms. Ethel Porras
+            For I, J, K, U, V   Ms. Tikia Brown
+            For L, N, O Mr. Steve Ghulamani
+            For M, P, Q     Ms. Candice DeBose-Tyson
+            For R, S, T; All Athletes   Mr. Yu Aoyagi
+            For W, Y, Z     Mr. Alvin Johnson, Jr.`;
+
+    agent.add(s + k);
+  }
+}
+
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
   (request, response) => {
     const agent = new WebhookClient({ request, response });
@@ -157,6 +184,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(
     intentMap.set("Default Welcome Intent", welcome);
     intentMap.set("Default Fallback Intent", fallback);
     intentMap.set("CoursesIntent", coursesIntent);
+    intentMap.set("I20Intent", mapToI20Intent);
+
     agent.handleRequest(intentMap);
   }
 );
