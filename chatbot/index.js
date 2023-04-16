@@ -128,8 +128,8 @@ const coursesIntent = (agent) => {
   const courses = agent.parameters.courses;
   const branch = agent.parameters.branch;
   const department = agent.parameters.department;
-  const type = agent.parameter.type;
-  const subject = agent.parameter.subject;
+  const type = agent.parameters.type;
+  const subject = agent.parameters.subject;
 
   let resp = "";
   if (type == "prerequisite") {
