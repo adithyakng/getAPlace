@@ -43,6 +43,7 @@ const coursesJson = [
     key: {
       type: "popular",
       courses: "course",
+      branch: "department",
       department: "computer science",
     },
     responseMessage:
@@ -53,6 +54,7 @@ const coursesJson = [
     key: {
       type: "mandatory",
       courses: "course",
+      branch: "department",
       department: "computer science",
     },
     responseMessage: "Mandatory core course is Analysis of Algorithms (AOA)",
@@ -62,6 +64,7 @@ const coursesJson = [
     key: {
       type: "tough",
       courses: "course",
+      branch: "department",
       department: "computer science",
     },
     responseMessage:
